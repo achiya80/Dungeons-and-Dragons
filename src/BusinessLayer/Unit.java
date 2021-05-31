@@ -7,7 +7,7 @@ import java.util.Random;
 public abstract class Unit extends Tile{
 
     protected String name;
-    protected Health health;
+    protected Resource health;
     protected int attack;
     protected int defense;
     protected MessageCallback messageCallback;
@@ -19,7 +19,7 @@ public abstract class Unit extends Tile{
     public Unit(char tile, String name, int healthPool, int attack, int defense) {
         super(tile);
         this.name = name;
-        this.health = new Health(healthPool);
+        this.health = new Resource(healthPool);
         this.attack = attack;
         this.defense = defense;
     }
@@ -58,7 +58,7 @@ public abstract class Unit extends Tile{
 
     protected void battle(Unit u){
         int damageDone = Math.max(attack() - u.defend(), 0);
-        u.health.Bleed(damageDone);
+        u.health.reduceAmount(damageDone);
 
         if(!alive()){
             deathCallback.call();
@@ -77,12 +77,12 @@ public abstract class Unit extends Tile{
     public abstract void visit(Player p);
 
     protected boolean alive() {
-        return getHealth().alive();
+        return getHealth().getResourceAmount() > 0;
     }
 
 
 
-    public Health getHealth() {
+    public Resource getHealth() {
         return health;
     }
 

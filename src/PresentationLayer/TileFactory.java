@@ -67,14 +67,12 @@ public class TileFactory {
     }
 
     public Empty produceEmpty(Position position){
-        Empty e = new Empty();
-        e.initialize(position);
+        Empty e = new Empty(position);
         return e;
     }
 
     public Wall produceWall(Position position){
-        Wall w = new Wall();
-        w.initialize(position);
+        Wall w = new Wall(position);
         return w;
     }
 }

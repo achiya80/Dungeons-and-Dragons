@@ -5,12 +5,8 @@ import BusinessLayer.VisitorPattern.Visitor;
 public class Empty extends Tile{
 
 
-    public Empty(){
+    public Empty(Position position){
         super('.');
-
-    }
-
-    public void initialize(Position position){
         super.initialize(position);
     }
 

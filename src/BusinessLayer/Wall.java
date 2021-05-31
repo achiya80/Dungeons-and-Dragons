@@ -5,13 +5,11 @@ import BusinessLayer.VisitorPattern.Visitor;
 public class Wall extends Tile{
 
 
-    public Wall(){
+    public Wall(Position position){
         super('#');
-    }
-
-    public void initialize(Position position){
         super.initialize(position);
     }
+
 
 
     @Override

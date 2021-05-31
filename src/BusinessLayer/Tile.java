@@ -14,6 +14,7 @@ public abstract class Tile implements Visited, Visitor, Comparable<Tile> {
     protected Tile(char tile){
         this.tile = tile;
     }
+
     protected void initialize(Position position){
         this.position = position;
     }
