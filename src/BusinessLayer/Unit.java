@@ -1,5 +1,6 @@
 package BusinessLayer;
 
+import BusinessLayer.Resources.Resource;
 import PresentationLayer.Callback.*;
 
 import java.util.Random;
@@ -79,6 +80,8 @@ public abstract class Unit extends Tile{
     protected boolean alive() {
         return getHealth().getResourceAmount() > 0;
     }
+
+
 
 
 

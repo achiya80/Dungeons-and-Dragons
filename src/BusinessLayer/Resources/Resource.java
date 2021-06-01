@@ -1,12 +1,9 @@
-package BusinessLayer;
+package BusinessLayer.Resources;
 
 public class Resource {
-    public int getResourcePool() {
-        return resourcePool;
-    }
 
-    private int resourcePool;
-    private int resourceAmount;
+    protected int resourcePool;
+    protected int resourceAmount;
 
 
     public Resource(int resourcePool, int resourceAmount) {
@@ -30,6 +27,14 @@ public class Resource {
     }
     public void reduceAmount(int reduce) {
         resourceAmount = Math.max(resourceAmount - reduce, 0);
+    }
+
+    public int getResourcePool() {
+        return resourcePool;
+    }
+
+    public String toString(){
+        return getResourceAmount() + "/" + getResourcePool();
     }
 
 

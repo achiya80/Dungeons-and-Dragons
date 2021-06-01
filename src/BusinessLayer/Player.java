@@ -4,6 +4,7 @@ import BusinessLayer.VisitorPattern.Visitor;
 import PresentationLayer.Callback.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Player extends Unit implements HeroicUnit{
 
@@ -33,7 +34,7 @@ public abstract class Player extends Unit implements HeroicUnit{
 
 
 
-    public abstract void castAbility();
+    public abstract void castAbility(Player player, List<Enemy> enemies);
 
     @Override
     public void accept(Visitor v) {
@@ -72,9 +73,9 @@ public abstract class Player extends Unit implements HeroicUnit{
 
     }
 
-    public void performAction(char c, List<Enemy> enemies){
+    public void performAction(char c, Player player,List<Enemy> enemies){
         if(c == 'e'){
-            castAbility();
+            castAbility(player, enemies);
         }
         else if(c == 's'){
             positionCallback.Move(new Position(getPosition().getX(), getPosition().getY()-1));

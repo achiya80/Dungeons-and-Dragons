@@ -2,6 +2,8 @@ package BusinessLayer;
 
 import BusinessLayer.VisitorPattern.Visitor;
 
+import java.util.List;
+
 public class Hunter extends Player {
 
     public Hunter(String name, int healthPool, int attackPoints, int defensePoints, int range) {
@@ -10,7 +12,7 @@ public class Hunter extends Player {
 
 
     @Override
-    public void castAbility() {
+    public void castAbility(Player player, List<Enemy> enemies) {
 
     }
 

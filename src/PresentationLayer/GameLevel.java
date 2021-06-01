@@ -85,7 +85,7 @@ public class GameLevel {
                 s = reader.nextLine();
             }
             char c = s.charAt(0);
-            player.performAction(c, enemies);
+            player.performAction(c,player, enemies);
         }
 
     }

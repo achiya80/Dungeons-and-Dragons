@@ -2,6 +2,8 @@ package BusinessLayer;
 
 import BusinessLayer.VisitorPattern.Visitor;
 
+import java.util.List;
+
 public class Rogue extends Player {
 
 
@@ -9,7 +11,7 @@ public class Rogue extends Player {
         super(name, healthPool, attack, defense,"Fan of Knives");
     }
     @Override
-    public void castAbility() {
+    public void castAbility(Player player, List<Enemy> enemies) {
 
     }
 
