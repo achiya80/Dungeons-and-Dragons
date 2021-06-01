@@ -87,16 +87,16 @@ public abstract class Player extends Unit implements HeroicUnit{
             castAbility(player, enemies);
         }
         else if(c == 's'){
-            positionCallback.Move(new Position(getPosition().getX(), getPosition().getY()-1));
-        }
-        else if(c == 'd'){
             positionCallback.Move(new Position(getPosition().getX()+1, getPosition().getY()));
         }
-        else if(c == 'w'){
+        else if(c == 'd'){
             positionCallback.Move(new Position(getPosition().getX(), getPosition().getY()+1));
         }
-        else if(c == 'a'){
+        else if(c == 'w'){
             positionCallback.Move(new Position(getPosition().getX()-1, getPosition().getY()));
+        }
+        else if(c == 'a'){
+            positionCallback.Move(new Position(getPosition().getX(), getPosition().getY()-1));
         }
     }
 

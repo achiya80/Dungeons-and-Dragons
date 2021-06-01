@@ -29,4 +29,8 @@ public class Rogue extends Player {
     public void accept(Visitor v) {
 
     }
+    @Override
+    public void levelUp() {
+
+    }
 }

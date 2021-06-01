@@ -36,6 +36,7 @@ public class GameInitializer {
                             (msg) -> System.out.println(msg));
                     e.setDeathCallback(() -> level.onEnemyDeath(e));
                     e.setPositionCallback((p) -> e.interact(board.getTile(p)));
+                    board.addTile(e);
                     level.addEnemy(e);
                 }
             }

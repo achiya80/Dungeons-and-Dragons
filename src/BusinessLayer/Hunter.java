@@ -27,6 +27,11 @@ public class Hunter extends Player {
     }
 
     @Override
+    public void levelUp() {
+
+    }
+
+    @Override
     public void accept(Visitor v) {
 
     }

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class GameLevel {
@@ -52,7 +53,7 @@ public class GameLevel {
 
     @Override
     public String toString() {
-        return String.format("%s\n%s", gameBoard, player.describe());
+        return String.format("%s\n%s\n", gameBoard, player.describe());
     }
 
     public static void main(String[] args){
@@ -61,11 +62,12 @@ public class GameLevel {
 
         System.out.println("choose from players");
         TileFactory tileFactory = new TileFactory();
-        tileFactory.listPlayers().stream().forEach(p -> System.out.println(p.describe()));
+        AtomicInteger i = new AtomicInteger(1);
+        tileFactory.listPlayers().stream().forEach(p -> System.out.println((i.getAndIncrement()) + ".  " + p.describe()));
         int select = reader.nextInt();
-        Player player = tileFactory.producePlayer(select);
+        Player player = tileFactory.producePlayer(select-1);
         GameLevel gameLevel = null;
-        while(level < 5 && !playerLost) {
+        while(level < 2 && !playerLost) {
             char[][] board = readAllLines(args[0] + LEVEL + level + PATH);
             gameLevel = GameInitializer.Initialize(board, player);
             gameLevel.startLevel();
@@ -80,6 +82,7 @@ public class GameLevel {
 
     public void startLevel(){
         while(!levelEnded() && !playerLost){
+            System.out.println(this);
             String s = reader.nextLine();
             while(s.length() != 1){
                 s = reader.nextLine();

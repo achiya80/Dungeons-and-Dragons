@@ -13,16 +13,12 @@ public class Empty extends Tile{
 
     @Override
     public void accept(Visitor v) {
-
+        v.visit(this);
     }
 
     @Override
-    public void visit(Player p) {
-
-    }
+    public void visit(Player p) { }
 
     @Override
-    public void visit(Enemy e) {
-
-    }
+    public void visit(Enemy e) { }
 }

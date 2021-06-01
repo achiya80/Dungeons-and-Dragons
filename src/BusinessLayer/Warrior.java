@@ -22,10 +22,9 @@ public class Warrior extends Player {
         if(getCooldown().isAbleToCast()) {
             Enemy e = enemies.get((int) Math.random() * enemies.size());
             int damageDone = getHealth().getResourcePool() / 10;
-            int healAmount = gainDefense()/10;
+            int healAmount = getDefense()*10;
             getHealth().addAmount(healAmount);
             messageCallback.send(String.format("%s cast %s healing for %d", getName(), getABILITY_NAME(), healAmount));
-
         }
         else{
             messageCallback.send(String.format("%s tried to cast %s, but %s is: %d", getName(),getABILITY_NAME(),getCooldown().getResourceName(),getCooldown().getResourceAmount()));
@@ -41,6 +40,7 @@ public class Warrior extends Player {
         getHealth().setResourcePool(healthGained);
         setAttack(attackGained);
         setDefense(defenseGained);
+        getCooldown().uponLevelingUp();
     }
 
     public Cooldown getCooldown() {
