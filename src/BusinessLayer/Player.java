@@ -14,15 +14,14 @@ public abstract class Player extends Unit implements HeroicUnit{
     private static final int DEFENSE_BONUS = 1;
     private static final int HEALTH_BONUS = 10;
 
+    protected int experience = 0;
+    protected int level = 1;
+    protected final String ABILITY_NAME;
 
-    private int experience = 0;
-    private int level = 1;
-    private final String ABILITY;
 
-
-    public Player(String name, int healthPool, Integer attack, Integer defense, String ABILITY) {
+    public Player(String name, int healthPool, Integer attack, Integer defense, String ABILITY_NAME) {
         super('@', name, healthPool, attack, defense);
-        this.ABILITY = ABILITY;
+        this.ABILITY_NAME = ABILITY_NAME;
     }
 
     public void initialize(Position position, MessageCallback messageCallback, DeathCallback deathCallback, PositionCallback positionCallback){
@@ -31,6 +30,9 @@ public abstract class Player extends Unit implements HeroicUnit{
 
 
 
+    public String getABILITY_NAME() {
+        return ABILITY_NAME;
+    }
 
 
 
@@ -47,6 +49,7 @@ public abstract class Player extends Unit implements HeroicUnit{
     @Override
     public void visit(Enemy e) {
         super.battle(e);
+        onKill(e);
     }
 
 
@@ -57,7 +60,15 @@ public abstract class Player extends Unit implements HeroicUnit{
 
     // When the player kills an enemy
     protected void onKill(Enemy e){
-
+        if(!e.alive()){
+            int expPoints = e.getExperienceValue();
+            messageCallback.send(String.format("%s died. %s gained %d experience points", e.getName(), getName(), expPoints));
+            setExperience(expPoints);
+            while(getExperience() > levelUpRequirement()){
+                setExperience(-levelUpRequirement());
+                levelUp();
+            }
+        }
     }
 
     // When the player dies
@@ -69,9 +80,7 @@ public abstract class Player extends Unit implements HeroicUnit{
     }
 
     // Player level up
-    protected void levelUp(){
-
-    }
+    public abstract void levelUp();
 
     public void performAction(char c, Player player,List<Enemy> enemies){
         if(c == 'e'){
@@ -118,6 +127,12 @@ public abstract class Player extends Unit implements HeroicUnit{
     public int getExperience() {
         return experience;
     }
+
+
+    public void setExperience(int experience) {
+        this.experience += experience;
+    }
+
 
     public String describe() {
         return String.format("%s\t\tLevel: %d\t\tExperience: %d/%d", super.describe(), getLevel(), getExperience(), levelUpRequirement());

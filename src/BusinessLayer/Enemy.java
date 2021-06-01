@@ -7,7 +7,7 @@ import PresentationLayer.Callback.PositionCallback;
 
 public abstract class Enemy extends Unit{
 
-    private int experienceValue;
+    protected int experienceValue;
 
     public Enemy(char tile, String name, int healthPool, int attack, int defense, int experienceValue) {
         super(tile, name, healthPool, attack, defense);
@@ -16,6 +16,11 @@ public abstract class Enemy extends Unit{
     public void initialize(Position position, MessageCallback messageCallback){
         super.initialize(position, messageCallback,null, null);
     }
+
+    public int getExperienceValue() {
+        return experienceValue;
+    }
+
 
 
 

@@ -59,10 +59,9 @@ public abstract class Unit extends Tile{
 
     protected void battle(Unit u){
         int damageDone = Math.max(attack() - u.defend(), 0);
-        u.health.reduceAmount(damageDone);
-
-        if(!alive()){
-            deathCallback.call();
+        u.getHealth().reduceAmount(damageDone);
+        if(!u.alive()){
+            u.onDeath();
         }
     }
 
@@ -100,6 +99,15 @@ public abstract class Unit extends Tile{
 
     public int getDefense() {
         return defense;
+    }
+
+
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+    public void setDefense(int defense) {
+        this.defense = defense;
     }
 
 
