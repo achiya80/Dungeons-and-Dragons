@@ -5,28 +5,20 @@ import BusinessLayer.VisitorPattern.Visitor;
 public class Empty extends Tile{
 
 
-    public Empty(){
+    public Empty(Position position){
         super('.');
-
-    }
-
-    public void initialize(Position position){
         super.initialize(position);
     }
 
 
     @Override
     public void accept(Visitor v) {
-
+        v.visit(this);
     }
 
     @Override
-    public void visit(Player p) {
-
-    }
+    public void visit(Player p) { }
 
     @Override
-    public void visit(Enemy e) {
-
-    }
+    public void visit(Enemy e) { }
 }

@@ -2,6 +2,8 @@ package BusinessLayer;
 
 import BusinessLayer.VisitorPattern.Visitor;
 
+import java.util.List;
+
 public class Boss extends Monster implements HeroicUnit{
     private Integer abilityFrequency;
     private Integer combatTicks;
@@ -14,9 +16,10 @@ public class Boss extends Monster implements HeroicUnit{
     }
 
     @Override
-    public void castAbility() {
+    public void castAbility(Player player, List<Enemy> enemies) {
 
     }
+
 
     @Override
     public void visit(Player p) {

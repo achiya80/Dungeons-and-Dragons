@@ -4,6 +4,7 @@ import BusinessLayer.VisitorPattern.Visitor;
 import PresentationLayer.Callback.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Player extends Unit implements HeroicUnit{
 
@@ -13,15 +14,15 @@ public abstract class Player extends Unit implements HeroicUnit{
     private static final int DEFENSE_BONUS = 1;
     private static final int HEALTH_BONUS = 10;
 
+    protected int experience = 0;
+    protected int level = 1;
+    protected final String ABILITY_NAME;
 
-    private int experience = 0;
-    private int level = 1;
-    private final String ABILITY;
+    protected AbilityDamage abilityDamage;
 
-
-    public Player(String name, int healthPool, Integer attack, Integer defense, String ABILITY) {
+    public Player(String name, int healthPool, Integer attack, Integer defense, String ABILITY_NAME) {
         super('@', name, healthPool, attack, defense);
-        this.ABILITY = ABILITY;
+        this.ABILITY_NAME = ABILITY_NAME;
     }
 
     public void initialize(Position position, MessageCallback messageCallback, DeathCallback deathCallback, PositionCallback positionCallback){
@@ -29,11 +30,20 @@ public abstract class Player extends Unit implements HeroicUnit{
     }
 
 
+    public void setAbilityDamage(AbilityDamage abilityDamage){
+        this.abilityDamage = abilityDamage;
+    }
+
+
+    public String getABILITY_NAME() {
+        return ABILITY_NAME;
+    }
+
+    public abstract void onPlayerTurn();
 
 
 
-
-    public abstract void castAbility();
+    public abstract void castAbility(Player player, List<Enemy> enemies);
 
     @Override
     public void accept(Visitor v) {
@@ -46,17 +56,32 @@ public abstract class Player extends Unit implements HeroicUnit{
     @Override
     public void visit(Enemy e) {
         super.battle(e);
+        onKill(e);
     }
 
 
     // Deals damage to the enemy with ability
-    protected void abilityDamage(Enemy e, int abilityDamage) {
-
+    protected void abilityDamage(Enemy e) {
+        int damageDone = abilityDamage.generateDamage() - e.defend();
+        e.getHealth().reduceAmount(damageDone);
+        messageCallback.send(String.format("%s hit %s for %d ability damage", getName(), e.getName(),damageDone));
+        if(!e.alive()) {
+            e.onDeath();
+        }
+        onKill(e);
     }
 
     // When the player kills an enemy
     protected void onKill(Enemy e){
-
+        if(!e.alive()){
+            int expPoints = e.getExperienceValue();
+            messageCallback.send(String.format("%s died. %s gained %d experience points", e.getName(), getName(), expPoints));
+            setExperience(expPoints);
+            while(getExperience() >= levelUpRequirement()){
+                setExperience(-levelUpRequirement());
+                levelUp();
+            }
+        }
     }
 
     // When the player dies
@@ -68,26 +93,28 @@ public abstract class Player extends Unit implements HeroicUnit{
     }
 
     // Player level up
-    protected void levelUp(){
+    public abstract void levelUp();
 
-    }
-
-    public void performAction(char c, List<Enemy> enemies){
+    public void performAction(char c, Player player,List<Enemy> enemies){
         if(c == 'e'){
-            castAbility();
+            castAbility(player, enemies);
         }
-        else if(c == 's'){
-            positionCallback.Move(new Position(getPosition().getX(), getPosition().getY()-1));
+        else {
+            onPlayerTurn();
+            if (c == 's') {
+                positionCallback.Move(new Position(getPosition().getX(), getPosition().getY() + 1));
+            } else if (c == 'd') {
+                positionCallback.Move(new Position(getPosition().getX() + 1, getPosition().getY()));
+            } else if (c == 'w') {
+                positionCallback.Move(new Position(getPosition().getX(), getPosition().getY() - 1));
+            } else if (c == 'a') {
+                positionCallback.Move(new Position(getPosition().getX() - 1, getPosition().getY()));
+            }
         }
-        else if(c == 'd'){
-            positionCallback.Move(new Position(getPosition().getX()+1, getPosition().getY()));
+        for (Enemy e : enemies){
+            e.preformAction('@', this, enemies);
         }
-        else if(c == 'w'){
-            positionCallback.Move(new Position(getPosition().getX(), getPosition().getY()+1));
-        }
-        else if(c == 'a'){
-            positionCallback.Move(new Position(getPosition().getX()-1, getPosition().getY()));
-        }
+
     }
 
     @Override
@@ -117,6 +144,12 @@ public abstract class Player extends Unit implements HeroicUnit{
     public int getExperience() {
         return experience;
     }
+
+
+    public void setExperience(int experience) {
+        this.experience += experience;
+    }
+
 
     public String describe() {
         return String.format("%s\t\tLevel: %d\t\tExperience: %d/%d", super.describe(), getLevel(), getExperience(), levelUpRequirement());

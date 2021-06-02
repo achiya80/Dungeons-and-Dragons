@@ -5,9 +5,11 @@ import PresentationLayer.Callback.DeathCallback;
 import PresentationLayer.Callback.MessageCallback;
 import PresentationLayer.Callback.PositionCallback;
 
+import java.util.List;
+
 public abstract class Enemy extends Unit{
 
-    private int experienceValue;
+    protected int experienceValue;
 
     public Enemy(char tile, String name, int healthPool, int attack, int defense, int experienceValue) {
         super(tile, name, healthPool, attack, defense);
@@ -17,12 +19,21 @@ public abstract class Enemy extends Unit{
         super.initialize(position, messageCallback,null, null);
     }
 
+    public int getExperienceValue() {
+        return experienceValue;
+    }
+
+
+    public void preformAction(char c, Player player, List<Enemy> enemies) {
+
+
+    }
 
 
 
     @Override
     public void onDeath() {
-
+        deathCallback.call();
     }
 
     @Override
