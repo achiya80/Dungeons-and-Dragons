@@ -1,14 +1,12 @@
 package BusinessLayer.Resources;
 
-import BusinessLayer.Enemy;
+import BusinessLayer.Enemies.Enemy;
 import BusinessLayer.Position;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Arrows extends AbilityResource {
-
-    private static final int COST = 1;
 
     private static final String RESOURCE_NAME = "Arrows";
 
@@ -17,7 +15,7 @@ public class Arrows extends AbilityResource {
     private int ticksCount;
 
     public Arrows(int resourceAmount, int range) {
-        super(Integer.MAX_VALUE, resourceAmount, range, RESOURCE_NAME);
+        super(Integer.MAX_VALUE, resourceAmount, range, RESOURCE_NAME, 1);
         this.ticksCount = 0;
     }
 
@@ -40,16 +38,7 @@ public class Arrows extends AbilityResource {
         }
     }
 
-    public void onAbilityCast(){
-        reduceAmount(COST);
-    }
-
-
-    public boolean isAbleToCast(List<Enemy> enemies){
-        return (getResourceAmount() - COST >= 0) && !(enemies.isEmpty());
-    }
-
     public String toString(){
-        return getResourceName() + ": " + getResourceAmount() + "\t\t\t\t\tRange: " + range;
+        return getResourceName() + ": " + getResourceAmount() + "\t\t\tRange: " + range;
     }
 }

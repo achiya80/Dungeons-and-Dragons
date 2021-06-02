@@ -1,6 +1,9 @@
 package BusinessLayer.VisitorPattern;
 
-import BusinessLayer.*;
+import BusinessLayer.Enemies.Enemy;
+import BusinessLayer.Players.Player;
+import BusinessLayer.Tiles.Empty;
+import BusinessLayer.Tiles.Wall;
 
 public interface Visitor {
     public void visit(Empty e);

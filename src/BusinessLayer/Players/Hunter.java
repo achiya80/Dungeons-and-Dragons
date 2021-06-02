@@ -1,7 +1,7 @@
-package BusinessLayer;
+package BusinessLayer.Players;
 
+import BusinessLayer.Enemies.Enemy;
 import BusinessLayer.Resources.Arrows;
-import BusinessLayer.VisitorPattern.Visitor;
 
 import java.util.List;
 
@@ -22,13 +22,18 @@ public class Hunter extends Player {
     @Override
     public void castAbility(Player player, List<Enemy> enemies) {
         List<Enemy> inRange = getArrows().filterRange(getPosition(),enemies);
-        if(getArrows().isAbleToCast(inRange)){
+        if(getArrows().isAbleToCast() && !inRange.isEmpty()){
             messageCallback.send(String.format("%s cast %s", getName(), getABILITY_NAME()));
             Enemy e = closest(inRange);
             abilityDamage(e);
+            getArrows().onAbilityCast();
         }
-        else{
-            messageCallback.send(String.format("%s tried to cast %s, but %s is: %d", getName(),getABILITY_NAME(),getArrows().getResourceName(),getArrows().getResourceAmount()));
+        else {
+            if (!getArrows().isAbleToCast()) {
+                messageCallback.send(String.format("%s tried to cast %s, but %s is: %d", getName(), getABILITY_NAME(), getArrows().getResourceName(), getArrows().getResourceAmount()));
+            } else {
+                messageCallback.send(String.format("%s tried to cast %s, but there was no enemy in range", getName(), getABILITY_NAME()));
+            }
         }
     }
 
@@ -44,14 +49,8 @@ public class Hunter extends Player {
 
     @Override
     public void levelUp() {
-        int healthGained = gainHealth();
-        int attackGained = gainAttack();
-        int defenseGained = gainDefense();
-        messageCallback.send(String.format("%s reached level %d: +%d Health +%d Attack +%d Defense", getName(), ++level, healthGained,attackGained, defenseGained));
-        getHealth().setResourcePool(healthGained);
-        setAttack(attackGained);
-        setDefense(defenseGained);
         arrows.uponLevelingUp(getLevel());
+        super.levelUp();
     }
 
     public void onPlayerTurn(){

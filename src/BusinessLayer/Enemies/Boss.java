@@ -1,10 +1,12 @@
-package BusinessLayer;
+package BusinessLayer.Enemies;
 
+import BusinessLayer.HeroicUnit;
+import BusinessLayer.Players.Player;
 import BusinessLayer.VisitorPattern.Visitor;
 
 import java.util.List;
 
-public class Boss extends Monster implements HeroicUnit{
+public class Boss extends Monster implements HeroicUnit {
     private Integer abilityFrequency;
     private Integer combatTicks;
 

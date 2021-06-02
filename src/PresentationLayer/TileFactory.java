@@ -1,5 +1,12 @@
 package PresentationLayer;
 
+import BusinessLayer.Enemies.Boss;
+import BusinessLayer.Enemies.Enemy;
+import BusinessLayer.Enemies.Monster;
+import BusinessLayer.Enemies.Trap;
+import BusinessLayer.Players.*;
+import BusinessLayer.Tiles.Empty;
+import BusinessLayer.Tiles.Wall;
 import PresentationLayer.Callback.*;
 import BusinessLayer.*;
 
@@ -48,7 +55,10 @@ public class TileFactory {
                 () -> new Mage("Thoros of Myr", 250, 25, 4, 150, 20, 20, 3, 4),
                 () -> new Rogue("Arya Stark", 150, 40, 2, 20),
                 () -> new Rogue("Bronn", 250, 35, 3, 50),
-                () -> new Hunter("Ygritte", 220, 30, 2, 6)
+                () -> new Hunter("Ygritte", 220, 30, 2, 6),
+                () -> new Hunter("Hawkeye", 200, 45, 1, 7),
+                () -> new Spy("Black Widow", 150,15, 7),
+                () -> new Spy("Agent 13", 175, 15, 5)
         );
     }
 

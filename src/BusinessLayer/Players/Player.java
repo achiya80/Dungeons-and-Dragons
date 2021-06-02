@@ -1,12 +1,14 @@
-package BusinessLayer;
+package BusinessLayer.Players;
 
+import BusinessLayer.*;
+import BusinessLayer.Enemies.Enemy;
+import BusinessLayer.Tiles.Unit;
 import BusinessLayer.VisitorPattern.Visitor;
 import PresentationLayer.Callback.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-public abstract class Player extends Unit implements HeroicUnit{
+public abstract class Player extends Unit implements HeroicUnit {
 
     public static final char playerTile = '@';
     private static final int REQ_EXP = 50;
@@ -93,9 +95,15 @@ public abstract class Player extends Unit implements HeroicUnit{
     }
 
     // Player level up
-    public abstract void levelUp();
+    protected void levelUp(){
+        messageCallback.send(String.format("%s reached level %d: +%d Health +%d Attack +%d Defense", getName(), level+1, gainHealth(), gainAttack(), gainDefense()));
+        getHealth().setResourcePool(gainHealth());
+        setAttack(gainAttack());
+        setDefense(gainDefense());
+        level++;
+    }
 
-    public void performAction(char c, Player player,List<Enemy> enemies){
+    public void preformAction(char c, Player player,List<Enemy> enemies){
         if(c == 'e'){
             castAbility(player, enemies);
         }

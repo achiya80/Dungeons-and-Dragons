@@ -2,10 +2,10 @@ package PresentationLayer;
 
 import BusinessLayer.Board.Board;
 import BusinessLayer.*;
-import BusinessLayer.VisitorPattern.Visitor;
-import PresentationLayer.Callback.MessageCallback;
-
-import java.util.ArrayList;
+import BusinessLayer.Enemies.Enemy;
+import BusinessLayer.Players.Player;
+import BusinessLayer.Tiles.Empty;
+import BusinessLayer.Tiles.Wall;
 
 public class GameInitializer {
 

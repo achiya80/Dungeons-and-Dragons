@@ -1,6 +1,6 @@
 package BusinessLayer.Resources;
 
-import BusinessLayer.Enemy;
+import BusinessLayer.Enemies.Enemy;
 import BusinessLayer.Position;
 
 import java.util.List;
@@ -12,19 +12,32 @@ public class AbilityResource extends Resource {
 
     protected String resourceName;
 
+    protected int cost;
 
-    protected AbilityResource(int resourcePool, int resourceAmount, int range, String resourceName) {
+    protected AbilityResource(int resourcePool, int resourceAmount, int range, String resourceName, int cost) {
         super(resourcePool, resourceAmount);
         this.range = range;
         this.resourceName = resourceName;
+        this.cost = cost;
     }
-    protected AbilityResource(int resourcePool, int range, String resourceName) {
+    protected AbilityResource(int resourcePool, int range, String resourceName, int cost) {
         super(resourcePool);
         this.range = range;
         this.resourceName = resourceName;
+        this.cost = cost;
     }
     public List<Enemy> filterRange(Position position, List<Enemy> enemies){
         return enemies.stream().filter(e -> position.Range(e.getPosition()) < range).collect(Collectors.toList());
+    }
+
+    public boolean isAbleToCast(){
+        return (getResourceAmount() - cost >= 0);
+    }
+
+    public void onAbilityCast(){
+        if(isAbleToCast()) {
+            reduceAmount(cost);
+        }
     }
 
     @Override
@@ -36,6 +49,9 @@ public class AbilityResource extends Resource {
         return resourceName;
     }
 
+    public int getCost(){
+        return cost;
+    }
 
 
 }

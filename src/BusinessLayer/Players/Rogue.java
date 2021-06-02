@@ -1,7 +1,7 @@
-package BusinessLayer;
+package BusinessLayer.Players;
 
+import BusinessLayer.Enemies.Enemy;
 import BusinessLayer.Resources.Energy;
-import BusinessLayer.VisitorPattern.Visitor;
 
 import java.util.List;
 
@@ -34,13 +34,7 @@ public class Rogue extends Player {
 
     @Override
     public void levelUp() {
-        int healthGained = gainHealth();
-        int attackGained = gainAttack();
-        int defenseGained = gainDefense();
-        messageCallback.send(String.format("%s reached level %d: +%d Health +%d Attack +%d Defense", getName(), ++level, healthGained,attackGained, defenseGained));
-        getHealth().setResourcePool(healthGained);
-        setAttack(attackGained);
-        setDefense(defenseGained);
+        super.levelUp();
         getEnergy().uponLevelingUp();
     }
 

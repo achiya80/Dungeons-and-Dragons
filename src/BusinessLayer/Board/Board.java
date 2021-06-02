@@ -1,6 +1,7 @@
 package BusinessLayer.Board;
 
 import BusinessLayer.*;
+import BusinessLayer.Tiles.Tile;
 
 import java.util.*;
 
@@ -14,9 +15,6 @@ public class Board {
 
     public Tile getTile(Position position){
         Tile tile = Tiles.stream().filter(t -> t.getPosition().compareTo(position) == 0).findFirst().get();
-        System.out.println(tile);
-        System.out.println(tile.getPosition().getX());
-        System.out.println(tile.getPosition().getY());
         return tile;
     }
 

@@ -1,5 +1,6 @@
-package BusinessLayer;
+package BusinessLayer.Tiles;
 
+import BusinessLayer.Position;
 import BusinessLayer.VisitorPattern.Visited;
 import BusinessLayer.VisitorPattern.Visitor;
 

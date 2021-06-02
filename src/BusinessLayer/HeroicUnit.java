@@ -1,5 +1,8 @@
 package BusinessLayer;
 
+import BusinessLayer.Enemies.Enemy;
+import BusinessLayer.Players.Player;
+
 import java.util.List;
 
 public interface HeroicUnit {

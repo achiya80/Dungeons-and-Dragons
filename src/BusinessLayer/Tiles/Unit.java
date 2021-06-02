@@ -1,5 +1,8 @@
-package BusinessLayer;
+package BusinessLayer.Tiles;
 
+import BusinessLayer.Enemies.Enemy;
+import BusinessLayer.Players.Player;
+import BusinessLayer.Position;
 import BusinessLayer.Resources.Resource;
 import PresentationLayer.Callback.*;
 
@@ -83,7 +86,7 @@ public abstract class Unit extends Tile{
     public abstract void visit(Enemy e);
     public abstract void visit(Player p);
 
-    protected boolean alive() {
+    public boolean alive() {
         return getHealth().getResourceAmount() > 0;
     }
 

@@ -1,17 +1,14 @@
 package PresentationLayer;
 
 import BusinessLayer.Board.Board;
-import BusinessLayer.*;
+import BusinessLayer.Enemies.Enemy;
+import BusinessLayer.Players.Player;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 public class GameLevel {
 
@@ -40,7 +37,7 @@ public class GameLevel {
 
 
     public void onPlayerDeath(){
-        playerLost = true;
+        System.out.println(this);
     }
 
     public void onEnemyDeath(Enemy e){
@@ -69,11 +66,13 @@ public class GameLevel {
         int select = reader.nextInt();
         Player player = tileFactory.producePlayer(select-1);
         GameLevel gameLevel = null;
-        while(level < 3 && !playerLost) {
-            char[][] board = readAllLines(args[0] + LEVEL + level + PATH);
+        File tempFile = new File(args[0] + LEVEL + level + PATH);
+        while(!playerLost && tempFile.exists()) {
+            char[][] board = FileParser.readAllLines(tempFile);
             gameLevel = GameInitializer.Initialize(board, player);
             gameLevel.startLevel();
             level++;
+            tempFile = new File(args[0] + LEVEL + level + PATH);
         }
         if(!playerLost){
             System.out.println("you won!!!");
@@ -83,49 +82,22 @@ public class GameLevel {
 
 
     public void startLevel(){
-        while(!levelEnded() && !playerLost){
+        while(!playerLost && levelEnded()){
+            playerLost = player.getHealth().getResourceAmount() <= 0;
             System.out.println(this);
-            String s = reader.nextLine();
-            while(s.length() != 1){
-                s = reader.nextLine();
+            if(!playerLost) {
+                String s = reader.nextLine();
+                while (s.length() != 1) {
+                    s = reader.nextLine();
+                }
+                char c = s.charAt(0);
+                player.preformAction(c, player, enemies);
+                playerLost = player.getHealth().getResourceAmount() <= 0;
             }
-            char c = s.charAt(0);
-            player.performAction(c,player, enemies);
         }
+        System.out.println(this);
 
     }
 
-    public static char[][] readAllLines(String path) {
-        List<String> lines = new ArrayList<>();
-        try {
-            BufferedReader reader =
-                    new BufferedReader(new FileReader(path));
-            String next;
-            while ((next = reader.readLine()) != null) {
-                lines.add(next);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println ("File not found " + path);
-        } catch (IOException e) {
-            System.out.println(e.getMessage() + "\n" +
-                    e.getStackTrace());
-        }
-        return ConvertListToArray(lines);
-    }
-
-
-    public static char[][] ConvertListToArray(List<String> l){
-        if(l.size() == 0) return null;
-        char[][] c = new char[l.size()][l.get(0).length()];
-        int i = 0;
-        for(String s : l){
-            for(int j = 0; j< c[0].length;j++){
-                c[i][j] = s.charAt(j);
-            }
-            i++;
-        }
-        return c;
-
-    }
 
 }
