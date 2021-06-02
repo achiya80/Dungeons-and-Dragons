@@ -11,8 +11,8 @@ public class Energy extends AbilityResource {
 
     private int cost;
 
-    public Energy(int resourcePool, int range, int cost) {
-        super(resourcePool, range,RESOURCE_NAME );
+    public Energy(int cost) {
+        super(100, 2,RESOURCE_NAME );
         this.cost = cost;
     }
 
@@ -34,5 +34,7 @@ public class Energy extends AbilityResource {
         return (getResourceAmount() - cost >= 0);
     }
 
-
+    public int getCost(){
+        return cost;
+    }
 }

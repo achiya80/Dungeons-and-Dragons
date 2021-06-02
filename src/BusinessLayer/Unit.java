@@ -3,6 +3,7 @@ package BusinessLayer;
 import BusinessLayer.Resources.Resource;
 import PresentationLayer.Callback.*;
 
+import java.util.List;
 import java.util.Random;
 
 public abstract class Unit extends Tile{
@@ -14,7 +15,7 @@ public abstract class Unit extends Tile{
     protected MessageCallback messageCallback;
     protected DeathCallback deathCallback;
     protected PositionCallback positionCallback;
-    private static final Random r = new Random();
+    protected static final Random r = new Random();
 
 
     public Unit(char tile, String name, int healthPool, int attack, int defense) {
@@ -47,11 +48,13 @@ public abstract class Unit extends Tile{
 
     protected int attack(){
         int result = r.nextInt(attack);
+        messageCallback.send(String.format("%s rolled %d attack points", getName(), result ));
         return result;
     }
 
     public int defend(){
         int result = r.nextInt(defense);
+        messageCallback.send(String.format("%s rolled %d defense points", getName(), result ));
         return result;
     }
 
@@ -59,7 +62,9 @@ public abstract class Unit extends Tile{
 
     protected void battle(Unit u){
         int damageDone = Math.max(attack() - u.defend(), 0);
+        messageCallback.send(String.format("%s dealt %d damage to %s", getName(), damageDone,u.getName()));
         u.getHealth().reduceAmount(damageDone);
+        messageCallback.send(u.describe());
         if(!u.alive()){
             u.onDeath();
         }
@@ -71,7 +76,8 @@ public abstract class Unit extends Tile{
         t.accept(this);
     }
 
-    
+    public abstract void preformAction(char c, Player player, List<Enemy> enemies);
+
 
 
     public abstract void visit(Enemy e);

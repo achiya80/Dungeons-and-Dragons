@@ -27,7 +27,7 @@ public abstract class Enemy extends Unit{
 
     @Override
     public void onDeath() {
-
+        deathCallback.call();
     }
 
     @Override

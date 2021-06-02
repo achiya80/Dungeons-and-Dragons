@@ -17,7 +17,7 @@ public class GameInitializer {
         TileFactory tileFactory = new TileFactory();
         for(int i = 0;i < c.length;i++){
             for(int j = 0;j < c[0].length;j++){
-                Position position = new Position(i, j);
+                Position position = new Position(j, i);
                 char tile = c[i][j];
                 if(tile == '.'){
                     Empty e = tileFactory.produceEmpty(position);

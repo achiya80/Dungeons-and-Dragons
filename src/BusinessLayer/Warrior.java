@@ -13,20 +13,29 @@ public class Warrior extends Player {
     private static final int DEFENSE_BONUS = 1;
     private static final int HEALTH_BONUS = 5;
 
+
     public Warrior(String name, int healthPool, int attackPoints, int defensePoints, int cooldownPool) {
         super(name, healthPool, attackPoints, defensePoints, "Avenger’s Shield");
         this.cooldown = new Cooldown(cooldownPool);
+        super.setAbilityDamage(() -> getHealth().getResourcePool()/10);
     }
+
+
     @Override
     public void castAbility(Player player, List<Enemy> enemies) {
         if(getCooldown().isAbleToCast()) {
-            Enemy e = enemies.get((int) Math.random() * enemies.size());
-            int damageDone = getHealth().getResourcePool() / 10;
+            getCooldown().onAbilityCast();
             int healAmount = getDefense()*10;
             getHealth().addAmount(healAmount);
+            List<Enemy> inRange = getCooldown().filterRange(getPosition(), enemies);
             messageCallback.send(String.format("%s cast %s healing for %d", getName(), getABILITY_NAME(), healAmount));
+            if(!inRange.isEmpty()) {
+                Enemy e = inRange.get(r.nextInt(inRange.size()));
+                abilityDamage(e);
+            }
         }
         else{
+            onPlayerTurn();
             messageCallback.send(String.format("%s tried to cast %s, but %s is: %d", getName(),getABILITY_NAME(),getCooldown().getResourceName(),getCooldown().getResourceAmount()));
         }
     }
@@ -36,11 +45,15 @@ public class Warrior extends Player {
         int healthGained = gainHealth();
         int attackGained = gainAttack();
         int defenseGained = gainDefense();
-        messageCallback.send(String.format("%s reached level %d: +%d  +%d  +%d", getName(), level++, healthGained, attackGained, defenseGained));
+        messageCallback.send(String.format("%s reached level %d: +%d Health +%d Attack +%d Defense", getName(), ++level, healthGained, attackGained, defenseGained));
         getHealth().setResourcePool(healthGained);
         setAttack(attackGained);
         setDefense(defenseGained);
         getCooldown().uponLevelingUp();
+    }
+    @Override
+    public void onPlayerTurn() {
+        getCooldown().onGameTick();
     }
 
     public Cooldown getCooldown() {
@@ -51,7 +64,6 @@ public class Warrior extends Player {
         return String.format("%s\t\t %s", super.describe(), getCooldown());
     }
 
-    // Health / attack / defense gain when the player levels up - should be overriden by player subclasses and call super.gainHealth() for the base amount, then add the extra value
     protected int gainHealth(){
         return super.gainHealth() + getLevel()*HEALTH_BONUS;
     }

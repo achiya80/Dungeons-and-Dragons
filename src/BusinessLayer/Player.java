@@ -18,6 +18,7 @@ public abstract class Player extends Unit implements HeroicUnit{
     protected int level = 1;
     protected final String ABILITY_NAME;
 
+    protected AbilityDamage abilityDamage;
 
     public Player(String name, int healthPool, Integer attack, Integer defense, String ABILITY_NAME) {
         super('@', name, healthPool, attack, defense);
@@ -29,10 +30,16 @@ public abstract class Player extends Unit implements HeroicUnit{
     }
 
 
+    public void setAbilityDamage(AbilityDamage abilityDamage){
+        this.abilityDamage = abilityDamage;
+    }
+
 
     public String getABILITY_NAME() {
         return ABILITY_NAME;
     }
+
+    public abstract void onPlayerTurn();
 
 
 
@@ -54,8 +61,14 @@ public abstract class Player extends Unit implements HeroicUnit{
 
 
     // Deals damage to the enemy with ability
-    protected void abilityDamage(Enemy e, int abilityDamage) {
-
+    protected void abilityDamage(Enemy e) {
+        int damageDone = abilityDamage.generateDamage() - e.defend();
+        e.getHealth().reduceAmount(damageDone);
+        messageCallback.send(String.format("%s hit %s for %d ability damage", getName(), e.getName(),damageDone));
+        if(!e.alive()) {
+            e.onDeath();
+        }
+        onKill(e);
     }
 
     // When the player kills an enemy
@@ -64,7 +77,7 @@ public abstract class Player extends Unit implements HeroicUnit{
             int expPoints = e.getExperienceValue();
             messageCallback.send(String.format("%s died. %s gained %d experience points", e.getName(), getName(), expPoints));
             setExperience(expPoints);
-            while(getExperience() > levelUpRequirement()){
+            while(getExperience() >= levelUpRequirement()){
                 setExperience(-levelUpRequirement());
                 levelUp();
             }
@@ -86,18 +99,22 @@ public abstract class Player extends Unit implements HeroicUnit{
         if(c == 'e'){
             castAbility(player, enemies);
         }
-        else if(c == 's'){
-            positionCallback.Move(new Position(getPosition().getX()+1, getPosition().getY()));
+        else {
+            onPlayerTurn();
+            if (c == 's') {
+                positionCallback.Move(new Position(getPosition().getX(), getPosition().getY() + 1));
+            } else if (c == 'd') {
+                positionCallback.Move(new Position(getPosition().getX() + 1, getPosition().getY()));
+            } else if (c == 'w') {
+                positionCallback.Move(new Position(getPosition().getX(), getPosition().getY() - 1));
+            } else if (c == 'a') {
+                positionCallback.Move(new Position(getPosition().getX() - 1, getPosition().getY()));
+            }
         }
-        else if(c == 'd'){
-            positionCallback.Move(new Position(getPosition().getX(), getPosition().getY()+1));
+        for (Enemy e : enemies){
+            e.preformAction('@', this, enemies);
         }
-        else if(c == 'w'){
-            positionCallback.Move(new Position(getPosition().getX()-1, getPosition().getY()));
-        }
-        else if(c == 'a'){
-            positionCallback.Move(new Position(getPosition().getX(), getPosition().getY()-1));
-        }
+
     }
 
     @Override

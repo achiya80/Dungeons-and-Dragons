@@ -44,7 +44,9 @@ public class GameLevel {
     }
 
     public void onEnemyDeath(Enemy e){
-        enemies = enemies.stream().filter(enemy -> (enemy.getPosition().compareTo(e.getPosition()) != 0)).collect(Collectors.toList());
+        enemies.remove(e);
+        gameBoard.removeTile(e);
+        gameBoard.addTile(new TileFactory().produceEmpty(e.getPosition()));
     }
 
     public boolean levelEnded(){
@@ -67,7 +69,7 @@ public class GameLevel {
         int select = reader.nextInt();
         Player player = tileFactory.producePlayer(select-1);
         GameLevel gameLevel = null;
-        while(level < 2 && !playerLost) {
+        while(level < 3 && !playerLost) {
             char[][] board = readAllLines(args[0] + LEVEL + level + PATH);
             gameLevel = GameInitializer.Initialize(board, player);
             gameLevel.startLevel();

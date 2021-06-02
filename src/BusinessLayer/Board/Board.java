@@ -26,7 +26,7 @@ public class Board {
         for(int i = 0;i < Tiles.size();i++){
             board+=Tiles.get(i).toString();
             if(i < Tiles.size() - 1){
-                if(Tiles.get(i).getPosition().getX() < Tiles.get(i+1).getPosition().getX()){
+                if(Tiles.get(i).getPosition().getY() < Tiles.get(i+1).getPosition().getY()){
                     board += "\n";
                 }
             }
@@ -39,6 +39,9 @@ public class Board {
     }
 
 
+    public void removeTile(Tile t){
+        Tiles.remove(t);
+    }
 
 
 
