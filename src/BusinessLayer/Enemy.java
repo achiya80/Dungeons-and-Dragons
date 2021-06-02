@@ -5,6 +5,8 @@ import PresentationLayer.Callback.DeathCallback;
 import PresentationLayer.Callback.MessageCallback;
 import PresentationLayer.Callback.PositionCallback;
 
+import java.util.List;
+
 public abstract class Enemy extends Unit{
 
     protected int experienceValue;
@@ -22,6 +24,10 @@ public abstract class Enemy extends Unit{
     }
 
 
+    public void preformAction(char c, Player player, List<Enemy> enemies) {
+
+
+    }
 
 
 
