@@ -1,13 +1,13 @@
 package BusinessLayer.Players;
 
 import BusinessLayer.Enemies.Enemy;
-import BusinessLayer.Resources.Bombs;
+import BusinessLayer.Resources.Bullets;
 
 import java.util.List;
 
 public class Spy extends Player{
 
-    private Bombs bombs;
+    private Bullets bullets;
 
     private static final int ATTACK_BONUS = 1;
     private static final int DEFENSE_BONUS = 15;
@@ -15,36 +15,39 @@ public class Spy extends Player{
 
 
     public Spy(String name, int healthPool, Integer attack, Integer defense) {
-        super(name, healthPool, attack, defense, "Plant And Throw");
-        setAbilityDamage(() -> getDefense() * 10);
-        this.bombs = new Bombs(5*getLevel());
+        super(name, healthPool, attack, defense, "Rain Of Bullets");
+        setAbilityDamage(() -> getDefense());
+        this.bullets = new Bullets(10*getLevel());
     }
 
 
     @Override
     public void levelUp() {
         super.levelUp();
-        getBombs().uponLevelingUp();
+        getBullets().uponLevelingUp();
     }
 
     @Override
     public void onPlayerTurn() {
-        getBombs().onGameTick();
+        getBullets().onGameTick();
     }
 
     @Override
     public void castAbility(Player player, List<Enemy> enemies) {
-        if(getBombs().isAbleToCast()){
+        if(getBullets().isAbleToCast()){
             messageCallback.send(String.format("%s cast %s", getName(), getABILITY_NAME()));
-            List<Enemy> inRange = getBombs().filterRange(getPosition(),enemies);
+            List<Enemy> inRange = getBullets().filterRange(getPosition(),enemies);
             if(!inRange.isEmpty()) {
                 Enemy e = closest(inRange);
-                abilityDamage(e);
+                int bulletsSpend = 0;
+                while (bulletsSpend++ < getBullets().getCost() && e.alive()) {
+                    abilityDamage(e);
+                }
             }
-            getBombs().onAbilityCast();
+            getBullets().onAbilityCast();
         }
         else {
-            messageCallback.send(String.format("%s tried to cast %s, but %s is: %d", getName(), getABILITY_NAME(), getBombs().getResourceName(), getBombs().getResourceAmount()));
+            messageCallback.send(String.format("%s tried to cast %s, but %s is: %d", getName(), getABILITY_NAME(), getBullets().getResourceName(), getBullets().getResourceAmount()));
         }
     }
 
@@ -58,8 +61,8 @@ public class Spy extends Player{
         return e;
     }
 
-    public Bombs getBombs() {
-        return bombs;
+    public Bullets getBullets() {
+        return bullets;
     }
 
     protected int gainHealth(){ return super.gainHealth() + getLevel()*HEALTH_BONUS; }
@@ -72,7 +75,7 @@ public class Spy extends Player{
 
 
     public String describe(){
-        return String.format("%s  %s",super.describe(), getBombs());
+        return String.format("%s  %s",super.describe(), getBullets());
     }
 
 }

@@ -128,7 +128,7 @@ public abstract class Player extends Unit implements HeroicUnit {
         }
         else {
             onPlayerTurn();
-            positionCallback.Move(actionsMap.get(c));
+            positionCallback.Move(actionsMap.get(c).get());
         }
         for (Enemy e : enemies){
             e.preformAction('@', this, enemies);

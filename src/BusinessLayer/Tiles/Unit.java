@@ -13,13 +13,13 @@ import java.util.function.Supplier;
 public abstract class Unit extends Tile{
 
 
-    protected Map<Character, Position> actionsMap = new HashMap<>(){
+    protected Map<Character, Supplier<Position>> actionsMap = new HashMap<>(){
         {
-            put(Movement.down, getPosition().Down());
-            put(Movement.up, getPosition().Up());
-            put(Movement.right, getPosition().Right());
-            put(Movement.left, getPosition().Left());
-            put(Movement.stay, getPosition().NoOperation());
+            put(Movement.down, () -> getPosition().Down());
+            put(Movement.up, () -> getPosition().Up());
+            put(Movement.right, () -> getPosition().Right());
+            put(Movement.left, () -> getPosition().Left());
+            put(Movement.stay, () -> getPosition().NoOperation());
         }
     };
     protected String name;

@@ -34,11 +34,10 @@ public class Mage extends Player {
             List<Enemy> inRange = getMana().filterRange(getPosition(), enemies);
             int hits = 0;
             messageCallback.send(String.format("%s cast %s", getName(), getABILITY_NAME()));
-            while (hits < this.hitsCount && !inRange.isEmpty()) {
+            while (hits++ < this.hitsCount && !inRange.isEmpty()) {
                 Enemy e = inRange.get(Unit.r.nextInt(inRange.size()));
                 abilityDamage(e);
                 if (!e.alive()) inRange.remove(e);
-                hits++;
             }
         }
         else{

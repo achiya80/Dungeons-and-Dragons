@@ -1,24 +1,24 @@
 package BusinessLayer.Resources;
 
-public class Bombs extends AbilityResource{
-    private static final String RESOURCE_NAME = "Bombs";
+public class Bullets extends AbilityResource{
+    private static final String RESOURCE_NAME = "Bullets";
 
     private static final int MAX_TICKS = 5;
 
     private int ticksCount;
 
-    public Bombs(int resourceAmount) {
-        super(Integer.MAX_VALUE, resourceAmount, 5, RESOURCE_NAME, 1);
+    public Bullets(int resourceAmount) {
+        super(Integer.MAX_VALUE, resourceAmount, 5, RESOURCE_NAME, 7);
         this.ticksCount = 0;
     }
 
     public void uponLevelingUp(){
-        addAmount(5);
+        addAmount(10);
     }
 
     public void onGameTick(){
         if(ticksCount == MAX_TICKS){
-            addAmount(2);
+            addAmount(5);
             ticksCount = 0;
         }
         else{
