@@ -15,7 +15,7 @@ public class Warrior extends Player {
 
 
     public Warrior(String name, int healthPool, int attackPoints, int defensePoints, int cooldownPool) {
-        super(name, healthPool, attackPoints, defensePoints, "Avenger’s Shield");
+        super(name, healthPool, attackPoints, defensePoints, "Avenger's Shield");
         this.cooldown = new Cooldown(cooldownPool);
         super.setAbilityDamage(() -> getHealth().getResourcePool()/10);
     }

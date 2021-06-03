@@ -37,9 +37,7 @@ public abstract class Tile implements Visited, Visitor, Comparable<Tile> {
     public void visit(BarbedWall b){
 
     }
-    public void visit(HiddenMine h){
 
-    }
 
     public void visit(Wall w){ }
 

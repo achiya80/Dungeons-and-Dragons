@@ -1,4 +1,4 @@
-package PresentationLayer;
+package PresentationLayer.FileHandler;
 
 import BusinessLayer.Board.Position;
 import BusinessLayer.Enemies.Boss;
@@ -6,9 +6,7 @@ import BusinessLayer.Enemies.Enemy;
 import BusinessLayer.Enemies.Monster;
 import BusinessLayer.Enemies.Trap;
 import BusinessLayer.Players.*;
-import BusinessLayer.Tiles.BarbedWall;
-import BusinessLayer.Tiles.Empty;
-import BusinessLayer.Tiles.Wall;
+import BusinessLayer.Tiles.*;
 import PresentationLayer.Callback.*;
 
 import java.util.Arrays;
@@ -77,8 +75,7 @@ public class TileFactory {
     }
 
     public Empty produceEmpty(Position position){
-        Empty e = new Empty(position);
-        return e;
+        return new Empty(position);
     }
 
     public Wall produceWall(Position position){

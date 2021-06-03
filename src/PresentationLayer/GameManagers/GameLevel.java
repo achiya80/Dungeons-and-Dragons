@@ -1,13 +1,14 @@
-package PresentationLayer;
+package PresentationLayer.GameManagers;
 
 import BusinessLayer.ActionHandler.Movement;
 import BusinessLayer.Board.Board;
 import BusinessLayer.Enemies.Enemy;
 import BusinessLayer.Players.Player;
+import PresentationLayer.FileHandler.FileParser;
+import PresentationLayer.FileHandler.TileFactory;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,10 +22,10 @@ public class GameLevel {
     private static boolean playerLost = false;
 
 
-    public static void main(String[] args){
-        args = new String[1];
-        args[0] = "C:\\Users\\achiy\\levels_dir";
-
+    public static void main(String[] args) throws Exception {
+        if(args.length == 0){
+            throw new Exception("input files directory");
+        }
         System.out.println("choose from players");
         TileFactory tileFactory = new TileFactory();
         AtomicInteger i = new AtomicInteger(1);

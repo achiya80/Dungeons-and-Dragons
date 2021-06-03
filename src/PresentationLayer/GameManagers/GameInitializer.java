@@ -1,12 +1,12 @@
-package PresentationLayer;
+package PresentationLayer.GameManagers;
 
 import BusinessLayer.Board.Board;
 import BusinessLayer.Board.Position;
 import BusinessLayer.Enemies.Enemy;
 import BusinessLayer.Players.Player;
 import BusinessLayer.Tiles.Empty;
-import BusinessLayer.Tiles.Tile;
 import BusinessLayer.Tiles.Wall;
+import PresentationLayer.FileHandler.TileFactory;
 
 public class GameInitializer {
 

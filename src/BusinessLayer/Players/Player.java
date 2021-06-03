@@ -70,13 +70,14 @@ public abstract class Player extends Unit implements HeroicUnit {
     public void visit(BarbedWall b){
         int stubDamage = b.stub();
         messageCallback.send(String.format("Barbed Wall rolled %d stub damage points", stubDamage));
-        int damageDone = stubDamage - defend();
+        int damageDone = Math.max(stubDamage - defend(),0);
         messageCallback.send(String.format("%s encounter Barbed Wall, got Stub for %d damage", getName(), damageDone));
         getHealth().reduceAmount(damageDone);
         if(!alive()) {
             onDeath();
         }
     }
+
 
 
     // Deals damage to the enemy with ability
@@ -119,7 +120,7 @@ public abstract class Player extends Unit implements HeroicUnit {
         getHealth().setResourcePool(gainHealth());
         setAttack(gainAttack());
         setDefense(gainDefense());
-        getHealth().addAmount(getHealth().getResourcePool());
+        getHealth().uponLevelingUp();
         level++;
     }
 

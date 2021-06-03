@@ -32,6 +32,10 @@ public class Resource {
         return resourcePool;
     }
 
+    public void uponLevelingUp(){
+        addAmount(getResourcePool());
+    }
+
     public String toString(){
         return getResourceAmount() + "/" + getResourcePool();
     }
