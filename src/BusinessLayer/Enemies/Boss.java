@@ -1,6 +1,6 @@
 package BusinessLayer.Enemies;
 
-import BusinessLayer.HeroicUnit;
+import BusinessLayer.AbilityInterfaces.HeroicUnit;
 import BusinessLayer.Players.Player;
 import BusinessLayer.VisitorPattern.Visitor;
 

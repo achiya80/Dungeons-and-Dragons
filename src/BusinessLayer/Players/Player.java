@@ -1,6 +1,7 @@
 package BusinessLayer.Players;
 
-import BusinessLayer.*;
+import BusinessLayer.AbilityInterfaces.AbilityDamage;
+import BusinessLayer.AbilityInterfaces.HeroicUnit;
 import BusinessLayer.Board.Position;
 import BusinessLayer.Enemies.Enemy;
 import BusinessLayer.Tiles.BarbedWall;
