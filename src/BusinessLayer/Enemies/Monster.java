@@ -1,6 +1,11 @@
 package BusinessLayer.Enemies;
 
+import BusinessLayer.Board.Position;
+import BusinessLayer.Players.Player;
+
 import java.util.List;
+
+import static BusinessLayer.ActionHandler.Movement.randomMovement;
 
 public class Monster extends Enemy{
 
@@ -33,15 +38,9 @@ public class Monster extends Enemy{
 
         }
         else {
-            move = (int) (Math.random() * 5);
-            if(move==1)
-                positionCallback.Move(new Position(getPosition().getX() - 1, getPosition().getY()));
-            if(move==2)
-                positionCallback.Move(new Position(getPosition().getX() + 1, getPosition().getY()));
-            if(move==3)
-                positionCallback.Move(new Position(getPosition().getX(), getPosition().getY() - 1));
-            if(move==4)
-                positionCallback.Move(new Position(getPosition().getX(), getPosition().getY() + 1));
+            move=randomMovement();
+            actionsMap.get(move);
+
         }
 
     }
