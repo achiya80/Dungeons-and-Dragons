@@ -18,6 +18,46 @@ public class Boss extends Monster implements HeroicUnit {
     }
 
     @Override
+    public void preformAction(Player player) {
+        int move;
+        if (player.getPosition().Range(this.getPosition())<visionRange)
+        {
+            if(combatTicks==abilityFrequency){
+                combatTicks=0;
+                //castAbility();
+            }
+            int dX= this.getPosition().getX()-player.getPosition().getX();
+            int dY=this.getPosition().getY()-player.getPosition().getY();
+            if (dX>dY) {
+                if (dX > 0)
+                    positionCallback.Move(new Position(getPosition().getX() - 1, getPosition().getY()));
+                else
+                    positionCallback.Move(new Position(getPosition().getX() + 1, getPosition().getY()));
+            }
+            else
+            {
+                if(dY>0)
+                    positionCallback.Move(new Position(getPosition().getX() , getPosition().getY()+ 1));
+                else
+                    positionCallback.Move(new Position(getPosition().getX() , getPosition().getY()- 1));
+            }
+
+        }
+        else {
+            combatTicks=0;
+            move = (int) (Math.random() * 5);
+            if(move==1)
+                positionCallback.Move(new Position(getPosition().getX() - 1, getPosition().getY()));
+            if(move==2)
+                positionCallback.Move(new Position(getPosition().getX() + 1, getPosition().getY()));
+            if(move==3)
+                positionCallback.Move(new Position(getPosition().getX(), getPosition().getY() - 1));
+            if(move==4)
+                positionCallback.Move(new Position(getPosition().getX(), getPosition().getY() + 1));
+        }
+
+    }
+    @Override
     public void castAbility(Player player, List<Enemy> enemies) {
 
     }

@@ -5,7 +5,7 @@ public class Trap extends Enemy {
     private final int visibilityTime;
     private final int invisibilityTime;
     private int ticksCount;
-    private boolean Visible;
+    private boolean visible;
 
 
     public Trap(char tile, String name, int healthPool, int attack, int defense, int experienceValue, int visibilityTime, int invisibilityTime) {
@@ -13,12 +13,21 @@ public class Trap extends Enemy {
         this.visibilityTime = visibilityTime;
         this.invisibilityTime = invisibilityTime;
         this.ticksCount = 0;
-        this.Visible = true;
+        this.visible = true;
     }
+    public void preformAction(Player player) {
+        visible=ticksCount<visibilityTime;
+        if (ticksCount == (visibilityTime + invisibilityTime))
+            ticksCount=0;
+        else
+            ticksCount=ticksCount+1;
+        if(this.getPosition().Range(player.getPosition())<2)
+            this.attack();
 
+    }
 
     @Override
     public String toString(){
-        return (Visible) ? super.toString() : ".";
+        return (visible) ? super.toString() : ".";
     }
 }

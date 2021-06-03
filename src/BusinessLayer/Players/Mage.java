@@ -67,6 +67,7 @@ public class Mage extends Player {
     public Mana getMana() {
         return mana;
     }
+
     public String describe(){
         return String.format("%s\t\t %s: %s", super.describe(), getMana().getResourceName(),getMana());
     }
