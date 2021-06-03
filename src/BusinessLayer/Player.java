@@ -112,7 +112,7 @@ public abstract class Player extends Unit implements HeroicUnit{
             }
         }
         for (Enemy e : enemies){
-            e.preformAction('@', this, enemies);
+            e.preformAction(this);
         }
 
     }

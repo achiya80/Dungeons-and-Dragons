@@ -22,14 +22,8 @@ public abstract class Enemy extends Unit{
     public int getExperienceValue() {
         return experienceValue;
     }
-
-
-    public void preformAction(char c, Player player, List<Enemy> enemies) {
-
-
-    }
-
-
+    
+    public abstract void preformAction(Player player);
 
     @Override
     public void onDeath() {

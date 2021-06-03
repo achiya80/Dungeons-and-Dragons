@@ -76,7 +76,7 @@ public abstract class Unit extends Tile{
         t.accept(this);
     }
 
-    public abstract void preformAction(char c, Player player, List<Enemy> enemies);
+
 
 
 
