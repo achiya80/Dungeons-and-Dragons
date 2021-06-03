@@ -1,10 +1,13 @@
 package BusinessLayer.Enemies;
 
 import BusinessLayer.AbilityInterfaces.HeroicUnit;
+import BusinessLayer.Board.Position;
 import BusinessLayer.Players.Player;
 import BusinessLayer.VisitorPattern.Visitor;
 
 import java.util.List;
+
+import static BusinessLayer.ActionHandler.Movement.randomMovement;
 
 public class Boss extends Monster implements HeroicUnit {
     private Integer abilityFrequency;
@@ -45,15 +48,8 @@ public class Boss extends Monster implements HeroicUnit {
         }
         else {
             combatTicks=0;
-            move = (int) (Math.random() * 5);
-            if(move==1)
-                positionCallback.Move(new Position(getPosition().getX() - 1, getPosition().getY()));
-            if(move==2)
-                positionCallback.Move(new Position(getPosition().getX() + 1, getPosition().getY()));
-            if(move==3)
-                positionCallback.Move(new Position(getPosition().getX(), getPosition().getY() - 1));
-            if(move==4)
-                positionCallback.Move(new Position(getPosition().getX(), getPosition().getY() + 1));
+            move=randomMovement();
+            actionsMap.get(move);
         }
 
     }

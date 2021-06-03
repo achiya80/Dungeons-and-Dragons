@@ -1,5 +1,7 @@
 package BusinessLayer.Enemies;
 
+import BusinessLayer.Players.Player;
+
 public class Trap extends Enemy {
 
     private final int visibilityTime;
