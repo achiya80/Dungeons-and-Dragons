@@ -15,7 +15,6 @@ public class Resource {
         this.resourceAmount = resourcePool;
     }
 
-
     public int getResourceAmount(){
         return resourceAmount;
     }

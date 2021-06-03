@@ -1,14 +1,15 @@
 package PresentationLayer;
 
+import BusinessLayer.Board.Position;
 import BusinessLayer.Enemies.Boss;
 import BusinessLayer.Enemies.Enemy;
 import BusinessLayer.Enemies.Monster;
 import BusinessLayer.Enemies.Trap;
 import BusinessLayer.Players.*;
+import BusinessLayer.Tiles.BarbedWall;
 import BusinessLayer.Tiles.Empty;
 import BusinessLayer.Tiles.Wall;
 import PresentationLayer.Callback.*;
-import BusinessLayer.*;
 
 import java.util.Arrays;
 import java.util.*;
@@ -35,7 +36,6 @@ public class TileFactory {
                 () -> new Boss('C', "Queen Cersei", 100, 10, 10,1000, 1, 8),
                 () -> new Trap('B', "Bonus Trap", 1, 1, 1, 250,  1, 10),
                 () -> new Trap('Q', "Queen's Trap", 250, 50, 10, 100, 3, 10),
-
                 () -> new Monster('z', "Wright", 600, 30, 15,100, 3),
                 () -> new Monster('b', "Bear-Wright", 1000, 75, 30, 250,  4),
                 () -> new Monster('g', "Giant-Wright",1500, 100, 40,500,   5),
@@ -82,7 +82,11 @@ public class TileFactory {
     }
 
     public Wall produceWall(Position position){
-        Wall w = new Wall(position);
-        return w;
+        if(Math.random() < 0.2) {
+            return new BarbedWall(position);
+        }
+        else {
+            return new Wall(position);
+        }
     }
 }

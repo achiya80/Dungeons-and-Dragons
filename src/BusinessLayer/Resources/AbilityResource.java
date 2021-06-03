@@ -1,7 +1,7 @@
 package BusinessLayer.Resources;
 
 import BusinessLayer.Enemies.Enemy;
-import BusinessLayer.Position;
+import BusinessLayer.Board.Position;
 
 import java.util.List;
 import java.util.stream.Collectors;

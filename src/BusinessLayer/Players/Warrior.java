@@ -35,8 +35,8 @@ public class Warrior extends Player {
             }
         }
         else{
-            onPlayerTurn();
             messageCallback.send(String.format("%s tried to cast %s, but %s is: %d", getName(),getABILITY_NAME(),getCooldown().getResourceName(),getCooldown().getResourceAmount()));
+            onPlayerTurn();
         }
     }
 

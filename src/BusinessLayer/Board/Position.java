@@ -1,4 +1,4 @@
-package BusinessLayer;
+package BusinessLayer.Board;
 
 public class Position implements Comparable<Position> {
 
@@ -29,6 +29,27 @@ public class Position implements Comparable<Position> {
     public int getY() {
         return Y;
     }
+
+    public Position Up(){
+        return new Position(X, Y - 1);
+    }
+
+    public Position Down(){
+        return new Position(X, Y + 1);
+    }
+
+    public Position Left(){
+        return new Position(X - 1, Y);
+    }
+
+    public Position Right(){
+        return new Position(X + 1, Y);
+    }
+
+    public Position NoOperation(){
+        return new Position(X , Y);
+    }
+
     @Override
     public int compareTo(Position o) {
         return (Y < o.Y) ? -1 : ((Y > o.Y) ? 1 : ((X < o.X) ? -1 : ((X > o.X) ? 1 : 0)));

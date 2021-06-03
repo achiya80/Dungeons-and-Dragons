@@ -2,25 +2,28 @@ package BusinessLayer.Tiles;
 
 import BusinessLayer.Enemies.Enemy;
 import BusinessLayer.Players.Player;
-import BusinessLayer.Board.Position;
 import BusinessLayer.VisitorPattern.Visitor;
 
-public class Empty extends Tile{
+public class HiddenMine extends Tile{
 
-    public Empty(Position position){
-        super('.');
-        super.initialize(position);
+
+    private boolean explode;
+
+    public HiddenMine(char tile) {
+        super(tile);
+        this.explode = false;
     }
-
 
     @Override
     public void accept(Visitor v) {
-        v.visit(this);
+
     }
 
     @Override
     public void visit(Player p) { }
 
     @Override
-    public void visit(Enemy e) { }
+    public void visit(Enemy e) {
+
+    }
 }

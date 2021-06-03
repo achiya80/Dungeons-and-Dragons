@@ -2,7 +2,7 @@ package BusinessLayer.Tiles;
 
 import BusinessLayer.Enemies.Enemy;
 import BusinessLayer.Players.Player;
-import BusinessLayer.Position;
+import BusinessLayer.Board.Position;
 import BusinessLayer.VisitorPattern.Visitor;
 
 public class Wall extends Tile{
@@ -25,4 +25,5 @@ public class Wall extends Tile{
 
     @Override
     public void visit(Enemy e) { }
+
 }

@@ -1,16 +1,27 @@
 package BusinessLayer.Tiles;
 
+import BusinessLayer.ActionHandler.Movement;
 import BusinessLayer.Enemies.Enemy;
 import BusinessLayer.Players.Player;
-import BusinessLayer.Position;
+import BusinessLayer.Board.Position;
 import BusinessLayer.Resources.Resource;
 import PresentationLayer.Callback.*;
 
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.function.Supplier;
 
 public abstract class Unit extends Tile{
 
+
+    protected Map<Character, Position> actionsMap = new HashMap<>(){
+        {
+            put(Movement.down, getPosition().Down());
+            put(Movement.up, getPosition().Up());
+            put(Movement.right, getPosition().Right());
+            put(Movement.left, getPosition().Left());
+            put(Movement.stay, getPosition().NoOperation());
+        }
+    };
     protected String name;
     protected Resource health;
     protected int attack;
@@ -19,6 +30,9 @@ public abstract class Unit extends Tile{
     protected DeathCallback deathCallback;
     protected PositionCallback positionCallback;
     protected static final Random r = new Random();
+
+
+
 
 
     public Unit(char tile, String name, int healthPool, int attack, int defense) {
@@ -68,10 +82,10 @@ public abstract class Unit extends Tile{
         messageCallback.send(String.format("%s dealt %d damage to %s", getName(), damageDone,u.getName()));
         u.getHealth().reduceAmount(damageDone);
         messageCallback.send(u.describe());
-        if(!u.alive()){
-            u.onDeath();
-        }
     }
+
+
+
 
 
 
@@ -79,7 +93,7 @@ public abstract class Unit extends Tile{
         t.accept(this);
     }
 
-    public abstract void preformAction(char c, Player player, List<Enemy> enemies);
+
 
 
 

@@ -11,7 +11,7 @@ public class Cooldown extends AbilityResource {
     }
 
     public void uponLevelingUp(){
-        addAmount(getCost());
+        reduceAmount(-getCost());
     }
 
     public void onGameTick(){

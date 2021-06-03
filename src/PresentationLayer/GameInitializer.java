@@ -1,10 +1,11 @@
 package PresentationLayer;
 
 import BusinessLayer.Board.Board;
-import BusinessLayer.*;
+import BusinessLayer.Board.Position;
 import BusinessLayer.Enemies.Enemy;
 import BusinessLayer.Players.Player;
 import BusinessLayer.Tiles.Empty;
+import BusinessLayer.Tiles.Tile;
 import BusinessLayer.Tiles.Wall;
 
 public class GameInitializer {

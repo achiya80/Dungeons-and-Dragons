@@ -1,6 +1,6 @@
 package PresentationLayer.Callback;
 
-import BusinessLayer.Position;
+import BusinessLayer.Board.Position;
 
 public interface PositionCallback {
     public void Move(Position Move);

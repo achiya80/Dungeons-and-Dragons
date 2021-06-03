@@ -1,11 +1,5 @@
 package BusinessLayer.Resources;
 
-import BusinessLayer.Enemies.Enemy;
-import BusinessLayer.Position;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class Bombs extends AbilityResource{
     private static final String RESOURCE_NAME = "Bombs";
 

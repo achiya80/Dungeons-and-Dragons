@@ -1,6 +1,5 @@
 package BusinessLayer.Board;
 
-import BusinessLayer.*;
 import BusinessLayer.Tiles.Tile;
 
 import java.util.*;
