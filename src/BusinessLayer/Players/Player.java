@@ -1,12 +1,17 @@
-package BusinessLayer;
+package BusinessLayer.Players;
 
+import BusinessLayer.AbilityInterfaces.AbilityDamage;
+import BusinessLayer.AbilityInterfaces.HeroicUnit;
+import BusinessLayer.Board.Position;
+import BusinessLayer.Enemies.Enemy;
+import BusinessLayer.Tiles.BarbedWall;
+import BusinessLayer.Tiles.Unit;
 import BusinessLayer.VisitorPattern.Visitor;
 import PresentationLayer.Callback.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-public abstract class Player extends Unit implements HeroicUnit{
+public abstract class Player extends Unit implements HeroicUnit {
 
     public static final char playerTile = '@';
     private static final int REQ_EXP = 50;
@@ -56,7 +61,21 @@ public abstract class Player extends Unit implements HeroicUnit{
     @Override
     public void visit(Enemy e) {
         super.battle(e);
-        onKill(e);
+        if(!e.alive()){
+            swapPositions(e);
+            onKill(e);
+        }
+    }
+
+    public void visit(BarbedWall b){
+        int stubDamage = b.stub();
+        messageCallback.send(String.format("Barbed Wall rolled %d stub damage points", stubDamage));
+        int damageDone = stubDamage - defend();
+        messageCallback.send(String.format("%s encounter Barbed Wall, got Stub for %d damage", getName(), damageDone));
+        getHealth().reduceAmount(damageDone);
+        if(!alive()) {
+            onDeath();
+        }
     }
 
 
@@ -66,21 +85,23 @@ public abstract class Player extends Unit implements HeroicUnit{
         e.getHealth().reduceAmount(damageDone);
         messageCallback.send(String.format("%s hit %s for %d ability damage", getName(), e.getName(),damageDone));
         if(!e.alive()) {
-            e.onDeath();
+            onKill(e);
         }
-        onKill(e);
     }
 
     // When the player kills an enemy
-    protected void onKill(Enemy e){
-        if(!e.alive()){
-            int expPoints = e.getExperienceValue();
-            messageCallback.send(String.format("%s died. %s gained %d experience points", e.getName(), getName(), expPoints));
-            setExperience(expPoints);
-            while(getExperience() >= levelUpRequirement()){
-                setExperience(-levelUpRequirement());
-                levelUp();
-            }
+    protected void onKill(Enemy e) {
+        int expPoints = e.getExperienceValue();
+        messageCallback.send(String.format("%s died. %s gained %d experience points", e.getName(), getName(), expPoints));
+        addExperience(expPoints);
+        e.onDeath();
+    }
+
+    protected void addExperience(int experienceGained){
+        setExperience(experienceGained);
+        while (getExperience() >= levelUpRequirement()) {
+            setExperience(-levelUpRequirement());
+            levelUp();
         }
     }
 
@@ -93,23 +114,22 @@ public abstract class Player extends Unit implements HeroicUnit{
     }
 
     // Player level up
-    public abstract void levelUp();
+    protected void levelUp(){
+        messageCallback.send(String.format("%s reached level %d: +%d Health +%d Attack +%d Defense", getName(), level+1, gainHealth(), gainAttack(), gainDefense()));
+        getHealth().setResourcePool(gainHealth());
+        setAttack(gainAttack());
+        setDefense(gainDefense());
+        getHealth().addAmount(getHealth().getResourcePool());
+        level++;
+    }
 
-    public void performAction(char c, Player player,List<Enemy> enemies){
+    public void preformAction(char c,List<Enemy> enemies){
         if(c == 'e'){
-            castAbility(player, enemies);
+            castAbility(this, enemies);
         }
         else {
             onPlayerTurn();
-            if (c == 's') {
-                positionCallback.Move(new Position(getPosition().getX(), getPosition().getY() + 1));
-            } else if (c == 'd') {
-                positionCallback.Move(new Position(getPosition().getX() + 1, getPosition().getY()));
-            } else if (c == 'w') {
-                positionCallback.Move(new Position(getPosition().getX(), getPosition().getY() - 1));
-            } else if (c == 'a') {
-                positionCallback.Move(new Position(getPosition().getX() - 1, getPosition().getY()));
-            }
+            positionCallback.Move(actionsMap.get(c).get());
         }
         for (Enemy e : enemies){
             e.preformAction(this);

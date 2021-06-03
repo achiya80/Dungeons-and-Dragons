@@ -1,15 +1,16 @@
-package BusinessLayer;
+package BusinessLayer.Tiles;
 
+import BusinessLayer.Enemies.Enemy;
+import BusinessLayer.Players.Player;
+import BusinessLayer.Board.Position;
 import BusinessLayer.VisitorPattern.Visitor;
 
-public class Wall extends Tile{
+public class Empty extends Tile{
 
-
-    public Wall(Position position){
-        super('#');
+    public Empty(Position position){
+        super('.');
         super.initialize(position);
     }
-
 
 
     @Override

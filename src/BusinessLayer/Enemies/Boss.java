@@ -1,22 +1,31 @@
-package BusinessLayer;
+package BusinessLayer.Enemies;
 
+import BusinessLayer.AbilityInterfaces.HeroicUnit;
+import BusinessLayer.Players.Player;
 import BusinessLayer.VisitorPattern.Visitor;
 
 import java.util.List;
 
-public class Monster extends Enemy{
+public class Boss extends Monster implements HeroicUnit {
+    private Integer abilityFrequency;
+    private Integer combatTicks;
 
-    protected int visionRange;
 
-
-    public Monster(char tile, String name, int healthPool, int attack, int defense, int experienceValue, int visionRange) {
-        super(tile, name, healthPool, attack, defense, experienceValue);
-        this.visionRange = visionRange;
+    public Boss(char tile, String name, int healthPool, int attackPoints, int defensePoints, int experienceValue, int visionRange, int abilityFrequency) {
+        super(tile, name, healthPool, attackPoints, defensePoints, experienceValue, visionRange);
+        this.abilityFrequency = abilityFrequency;
+        this.combatTicks = 0;
     }
+
+    @Override
     public void preformAction(Player player) {
         int move;
         if (player.getPosition().Range(this.getPosition())<visionRange)
         {
+            if(combatTicks==abilityFrequency){
+                combatTicks=0;
+                //castAbility();
+            }
             int dX= this.getPosition().getX()-player.getPosition().getX();
             int dY=this.getPosition().getY()-player.getPosition().getY();
             if (dX>dY) {
@@ -35,6 +44,7 @@ public class Monster extends Enemy{
 
         }
         else {
+            combatTicks=0;
             move = (int) (Math.random() * 5);
             if(move==1)
                 positionCallback.Move(new Position(getPosition().getX() - 1, getPosition().getY()));
@@ -47,5 +57,24 @@ public class Monster extends Enemy{
         }
 
     }
+    @Override
+    public void castAbility(Player player, List<Enemy> enemies) {
 
+    }
+
+
+    @Override
+    public void visit(Player p) {
+
+    }
+
+    @Override
+    public void visit(Enemy e) {
+
+    }
+
+    @Override
+    public void accept(Visitor v) {
+
+    }
 }

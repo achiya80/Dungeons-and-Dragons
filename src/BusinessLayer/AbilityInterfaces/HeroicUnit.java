@@ -1,4 +1,7 @@
-package BusinessLayer;
+package BusinessLayer.AbilityInterfaces;
+
+import BusinessLayer.Enemies.Enemy;
+import BusinessLayer.Players.Player;
 
 import java.util.List;
 

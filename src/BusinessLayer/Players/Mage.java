@@ -1,7 +1,8 @@
-package BusinessLayer;
+package BusinessLayer.Players;
 
+import BusinessLayer.Enemies.Enemy;
 import BusinessLayer.Resources.Mana;
-import BusinessLayer.VisitorPattern.Visitor;
+import BusinessLayer.Tiles.Unit;
 
 import java.util.List;
 
@@ -33,11 +34,10 @@ public class Mage extends Player {
             List<Enemy> inRange = getMana().filterRange(getPosition(), enemies);
             int hits = 0;
             messageCallback.send(String.format("%s cast %s", getName(), getABILITY_NAME()));
-            while (hits < this.hitsCount && !inRange.isEmpty()) {
-                Enemy e = inRange.get(r.nextInt(inRange.size()));
+            while (hits++ < this.hitsCount && !inRange.isEmpty()) {
+                Enemy e = inRange.get(Unit.r.nextInt(inRange.size()));
                 abilityDamage(e);
                 if (!e.alive()) inRange.remove(e);
-                hits++;
             }
         }
         else{
@@ -47,17 +47,12 @@ public class Mage extends Player {
     }
     @Override
     public void levelUp() {
-        int healthGained = gainHealth();
-        int attackGained = gainAttack();
-        int defenseGained = gainDefense();
         int spellPowerGained = gainSpellPower();
         int manaPoolGained = gainManaPool();
-        messageCallback.send(String.format("%s reached level %d: +%d Health +%d Attack +%d Defense +%d Mana Pool +%d Spell Power", getName(), ++level, healthGained, attackGained, defenseGained, manaPoolGained,spellPowerGained));
+        super.levelUp();
+        messageCallback.send(String.format("+%d Mana Pool +%d Spell Power", manaPoolGained,spellPowerGained));
         getMana().uponLevelingUp();
         getMana().setResourcePool(manaPoolGained);
-        getHealth().setResourcePool(healthGained);
-        setAttack(attackGained);
-        setDefense(defenseGained);
         getMana().setSpellPower(spellPowerGained);
     }
 

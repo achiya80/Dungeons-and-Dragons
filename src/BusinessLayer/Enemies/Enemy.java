@@ -1,13 +1,15 @@
-package BusinessLayer;
+package BusinessLayer.Enemies;
 
+import BusinessLayer.Players.Player;
+import BusinessLayer.Board.Position;
+import BusinessLayer.Tiles.BarbedWall;
+import BusinessLayer.Tiles.Unit;
 import BusinessLayer.VisitorPattern.Visitor;
-import PresentationLayer.Callback.DeathCallback;
 import PresentationLayer.Callback.MessageCallback;
-import PresentationLayer.Callback.PositionCallback;
 
 import java.util.List;
 
-public abstract class Enemy extends Unit{
+public abstract class Enemy extends Unit {
 
     protected int experienceValue;
 
@@ -37,6 +39,9 @@ public abstract class Enemy extends Unit{
 
     @Override
     public void visit(Enemy e) { }
+
+    @Override
+    public void visit(BarbedWall b){ }
 
     @Override
     public void accept(Visitor v) {

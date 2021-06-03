@@ -1,7 +1,7 @@
-package BusinessLayer;
+package BusinessLayer.Players;
 
+import BusinessLayer.Enemies.Enemy;
 import BusinessLayer.Resources.Cooldown;
-import BusinessLayer.VisitorPattern.Visitor;
 
 import java.util.List;
 
@@ -35,20 +35,14 @@ public class Warrior extends Player {
             }
         }
         else{
-            onPlayerTurn();
             messageCallback.send(String.format("%s tried to cast %s, but %s is: %d", getName(),getABILITY_NAME(),getCooldown().getResourceName(),getCooldown().getResourceAmount()));
+            onPlayerTurn();
         }
     }
 
     @Override
     public void levelUp() {
-        int healthGained = gainHealth();
-        int attackGained = gainAttack();
-        int defenseGained = gainDefense();
-        messageCallback.send(String.format("%s reached level %d: +%d Health +%d Attack +%d Defense", getName(), ++level, healthGained, attackGained, defenseGained));
-        getHealth().setResourcePool(healthGained);
-        setAttack(attackGained);
-        setDefense(defenseGained);
+        super.levelUp();
         getCooldown().uponLevelingUp();
     }
     @Override
@@ -64,9 +58,7 @@ public class Warrior extends Player {
         return String.format("%s\t\t %s", super.describe(), getCooldown());
     }
 
-    protected int gainHealth(){
-        return super.gainHealth() + getLevel()*HEALTH_BONUS;
-    }
+    protected int gainHealth(){ return super.gainHealth() + getLevel()*HEALTH_BONUS; }
     protected int gainAttack(){
         return super.gainAttack() + getLevel() * ATTACK_BONUS;
     }

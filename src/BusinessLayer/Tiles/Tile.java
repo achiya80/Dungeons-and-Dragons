@@ -1,5 +1,6 @@
-package BusinessLayer;
+package BusinessLayer.Tiles;
 
+import BusinessLayer.Board.Position;
 import BusinessLayer.VisitorPattern.Visited;
 import BusinessLayer.VisitorPattern.Visitor;
 
@@ -31,6 +32,13 @@ public abstract class Tile implements Visited, Visitor, Comparable<Tile> {
         Position temp = t.position;
         t.position = position;
         position = temp;
+    }
+
+    public void visit(BarbedWall b){
+
+    }
+    public void visit(HiddenMine h){
+
     }
 
     public void visit(Wall w){ }

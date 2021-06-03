@@ -1,6 +1,4 @@
-package BusinessLayer;
-
-import BusinessLayer.VisitorPattern.Visitor;
+package BusinessLayer.Enemies;
 
 public class Trap extends Enemy {
 
