@@ -30,7 +30,7 @@ public class Warrior extends Player {
             List<Enemy> inRange = getCooldown().filterRange(getPosition(), enemies);
             messageCallback.send(String.format("%s cast %s healing for %d", getName(), getABILITY_NAME(), healAmount));
             if(!inRange.isEmpty()) {
-                Enemy e = inRange.get(r.nextInt(inRange.size()));
+                Enemy e = inRange.get(ng.generate(inRange.size()));
                 abilityDamage(e);
             }
         }

@@ -1,6 +1,9 @@
 package BusinessLayer.Enemies;
 
 import BusinessLayer.Players.Player;
+import BusinessLayer.Tiles.Empty;
+
+import java.util.List;
 
 public class Trap extends Enemy {
 
@@ -17,16 +20,15 @@ public class Trap extends Enemy {
         this.ticksCount = 0;
         this.visible = true;
     }
-    public void preformAction(Player player) {
+    public void performAction(Player player, List<Enemy> enemies) {
         visible=ticksCount<visibilityTime;
-        if (ticksCount == (visibilityTime + invisibilityTime))
-            ticksCount=0;
-        else
-            ticksCount=ticksCount+1;
+        ticksCount = (ticksCount == (visibilityTime + invisibilityTime)) ? 0 : ticksCount + 1;
         if(this.getPosition().Range(player.getPosition())<2)
-            this.attack();
+            battle(player);
 
     }
+
+    public void visit(Empty e){ }
 
     @Override
     public String toString(){

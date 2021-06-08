@@ -1,11 +1,15 @@
 package BusinessLayer.ActionHandler;
 
+import BusinessLayer.NumericGenerators.NumericGenerator;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Movement {
+
+    private static NumericGenerator ng = NumericGenerator.getInstance(true);
 
     public static char castAbility = 'e';
     public static char up = 'w';
@@ -21,6 +25,11 @@ public class Movement {
         return moves.stream().map(c -> String.valueOf(c)).collect(Collectors.toList());
     }
     public static char randomMovement(){
-        return moves.get(((int)Math.random()*moves.size()-1));
+        return moves.get((ng.generate(moves.size() - 1)));
     }
+
+    public static void DeterministicForTesting(){
+        ng = NumericGenerator.getInstance(false);
+    }
+
 }

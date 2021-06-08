@@ -34,10 +34,6 @@ public abstract class Tile implements Visited, Visitor, Comparable<Tile> {
         position = temp;
     }
 
-    public void visit(BarbedWall b){
-
-    }
-
 
     public void visit(Wall w){ }
 

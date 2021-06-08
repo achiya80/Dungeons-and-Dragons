@@ -7,8 +7,8 @@ public class Bullets extends AbilityResource{
 
     private int ticksCount;
 
-    public Bullets(int resourceAmount) {
-        super(Integer.MAX_VALUE, resourceAmount, 5, RESOURCE_NAME, 7);
+    public Bullets(int resourceAmount, int cost) {
+        super(Integer.MAX_VALUE, resourceAmount, 5, RESOURCE_NAME, cost);
         this.ticksCount = 0;
     }
 

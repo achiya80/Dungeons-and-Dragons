@@ -26,4 +26,7 @@ public class Wall extends Tile{
     @Override
     public void visit(Enemy e) { }
 
+    @Override
+    public void visit(Empty e) { }
+
 }

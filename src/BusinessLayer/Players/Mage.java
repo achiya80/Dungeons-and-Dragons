@@ -35,7 +35,7 @@ public class Mage extends Player {
             int hits = 0;
             messageCallback.send(String.format("%s cast %s", getName(), getABILITY_NAME()));
             while (hits++ < this.hitsCount && !inRange.isEmpty()) {
-                Enemy e = inRange.get(Unit.r.nextInt(inRange.size()));
+                Enemy e = inRange.get(ng.generate(inRange.size()));
                 abilityDamage(e);
                 if (!e.alive()) inRange.remove(e);
             }

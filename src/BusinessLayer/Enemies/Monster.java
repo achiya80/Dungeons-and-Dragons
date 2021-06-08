@@ -1,11 +1,12 @@
 package BusinessLayer.Enemies;
 
+import BusinessLayer.ActionHandler.Movement;
 import BusinessLayer.Board.Position;
 import BusinessLayer.Players.Player;
 
 import java.util.List;
 
-import static BusinessLayer.ActionHandler.Movement.randomMovement;
+import BusinessLayer.ActionHandler.*;
 
 public class Monster extends Enemy{
 
@@ -16,32 +17,20 @@ public class Monster extends Enemy{
         super(tile, name, healthPool, attack, defense, experienceValue);
         this.visionRange = visionRange;
     }
-    public void preformAction(Player player) {
-        int move;
-        if (player.getPosition().Range(this.getPosition())<visionRange)
-        {
-            int dX= this.getPosition().getX()-player.getPosition().getX();
-            int dY=this.getPosition().getY()-player.getPosition().getY();
-            if (dX>dY) {
-                if (dX > 0)
-                    positionCallback.Move(new Position(getPosition().getX() - 1, getPosition().getY()));
-                else
-                    positionCallback.Move(new Position(getPosition().getX() + 1, getPosition().getY()));
-            }
-            else
-            {
-                if(dY>0)
-                    positionCallback.Move(new Position(getPosition().getX() , getPosition().getY()+ 1));
-                else
-                    positionCallback.Move(new Position(getPosition().getX() , getPosition().getY()- 1));
-            }
-
+    public void performAction(Player player, List<Enemy> enemies) {
+        if (player.getPosition().Range(this.getPosition())<visionRange) {
+            positionCallback.Move(actionsMap.get(playerTrackPattern(player)).get());
         }
         else {
-            move=randomMovement();
-            actionsMap.get(move);
-
+            positionCallback.Move(actionsMap.get(Movement.randomMovement()).get());
         }
+
+    }
+
+    protected char playerTrackPattern(Player player){
+        int dX= getPosition().RangeX(player.getPosition());
+        int dY= getPosition().RangeY(player.getPosition());
+        return (Math.abs(dX)>Math.abs(dY)) ? (dX > 0) ? Movement.left : Movement.right : (dY > 0) ? Movement.up : Movement.down;
 
     }
 

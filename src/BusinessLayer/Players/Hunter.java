@@ -12,8 +12,8 @@ public class Hunter extends Player {
 
     private Arrows arrows;
 
-    public Hunter(String name, int healthPool, int attackPoints, int defensePoints, int range) {
-        super(name, healthPool, attackPoints, defensePoints, "Shoot");
+    public Hunter(String name, int healthPool, int attack, int defense, int range) {
+        super(name, healthPool, attack, defense, "Shoot");
         setAbilityDamage(() -> getAttack());
         this.arrows = new Arrows(10*getLevel(),range);
     }
@@ -31,7 +31,8 @@ public class Hunter extends Player {
         else {
             if (!getArrows().isAbleToCast()) {
                 messageCallback.send(String.format("%s tried to cast %s, but %s is: %d", getName(), getABILITY_NAME(), getArrows().getResourceName(), getArrows().getResourceAmount()));
-            } else {
+            }
+            else {
                 messageCallback.send(String.format("%s tried to cast %s, but there was no enemy in range", getName(), getABILITY_NAME()));
             }
         }

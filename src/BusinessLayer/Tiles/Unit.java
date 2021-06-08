@@ -2,6 +2,7 @@ package BusinessLayer.Tiles;
 
 import BusinessLayer.ActionHandler.Movement;
 import BusinessLayer.Enemies.Enemy;
+import BusinessLayer.NumericGenerators.NumericGenerator;
 import BusinessLayer.Players.Player;
 import BusinessLayer.Board.Position;
 import BusinessLayer.Resources.Resource;
@@ -29,7 +30,7 @@ public abstract class Unit extends Tile{
     protected MessageCallback messageCallback;
     protected DeathCallback deathCallback;
     protected PositionCallback positionCallback;
-    protected static final Random r = new Random();
+    protected static NumericGenerator ng = NumericGenerator.getInstance(true);
 
 
 
@@ -64,13 +65,13 @@ public abstract class Unit extends Tile{
 
 
     protected int attack(){
-        int result = r.nextInt(attack);
+        int result = ng.generate(attack);
         messageCallback.send(String.format("%s rolled %d attack points", getName(), result ));
         return result;
     }
 
     public int defend(){
-        int result = r.nextInt(defense);
+        int result = ng.generate(defense);
         messageCallback.send(String.format("%s rolled %d defense points", getName(), result ));
         return result;
     }
@@ -78,10 +79,10 @@ public abstract class Unit extends Tile{
     public abstract void onDeath();
 
     protected void battle(Unit u){
+        messageCallback.send(String.format("%s engaged in combat with %s \n%s\n%s",getName(),u.getName(),describe(),u.describe()));
         int damageDone = Math.max(attack() - u.defend(), 0);
         messageCallback.send(String.format("%s dealt %d damage to %s", getName(), damageDone,u.getName()));
         u.getHealth().reduceAmount(damageDone);
-        messageCallback.send(u.describe());
     }
 
 
@@ -128,10 +129,10 @@ public abstract class Unit extends Tile{
 
 
     public void setAttack(int attack) {
-        this.attack = attack;
+        this.attack += attack;
     }
     public void setDefense(int defense) {
-        this.defense = defense;
+        this.defense += defense;
     }
 
 
@@ -139,6 +140,10 @@ public abstract class Unit extends Tile{
         return String.format("%s\t\tHealth: %s\t\tAttack: %d\t\tDefense: %d", getName(), getHealth(), getAttack(), getDefense());
     }
 
+
+    public static void DeterministicForTesting(){
+        ng = NumericGenerator.getInstance(false);
+    }
 
 
 }

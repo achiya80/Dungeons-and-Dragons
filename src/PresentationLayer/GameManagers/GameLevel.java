@@ -9,47 +9,20 @@ import PresentationLayer.FileHandler.TileFactory;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GameLevel {
 
-    private static final String LEVEL = "\\level";
-    private static final String PATH = ".txt";
-    private static int level = 1;
+
     private static Scanner reader = new Scanner(System.in);
-    private static boolean playerLost = false;
 
 
-    public static void main(String[] args) throws Exception {
-        if(args.length == 0){
-            throw new Exception("input files directory");
-        }
-        System.out.println("choose from players");
-        TileFactory tileFactory = new TileFactory();
-        AtomicInteger i = new AtomicInteger(1);
-        tileFactory.listPlayers().stream().forEach(p -> System.out.println((i.getAndIncrement()) + ".  " + p.describe()));
-        int select = reader.nextInt();
-        Player player = tileFactory.producePlayer(select-1);
-        GameLevel gameLevel = null;
-        File tempFile = new File(args[0] + LEVEL + level + PATH);
-        while(!playerLost && tempFile.exists()) {
-            char[][] board = FileParser.readAllLines(tempFile);
-            gameLevel = GameInitializer.Initialize(board, player);
-            gameLevel.startLevel();
-            level++;
-            tempFile = new File(args[0] + LEVEL + level + PATH);
-        }
-        if(!playerLost){
-            System.out.println("you won!!!");
-        }
-    }
-
-
-
-
-
+    private boolean playerLost = false;
     private Board gameBoard;
     private Player player;
     private List<Enemy> enemies = new ArrayList<>();
@@ -69,6 +42,7 @@ public class GameLevel {
 
     public void onPlayerDeath(){
         System.out.println(this);
+        System.out.println("Game Over");
     }
 
     public void onEnemyDeath(Enemy e){
@@ -89,19 +63,22 @@ public class GameLevel {
 
     public void startLevel(){
         while(!playerLost && !levelEnded()){
-            playerLost = !player.alive();
             System.out.println(this);
-            if(!playerLost) {
+            if(!gameEnded()) {
                 String s = reader.nextLine();
                 while (!Movement.getMoves().contains(s)) {
                     s = reader.nextLine();
                 }
                 char c = s.charAt(0);
-                player.preformAction(c, enemies);
-                playerLost = !player.alive();
+                player.performAction(c, enemies);
+                for(Enemy e : enemies) e.performAction(player, enemies);
             }
         }
 
+    }
+
+    public boolean gameEnded(){
+        return !player.alive();
     }
 
 

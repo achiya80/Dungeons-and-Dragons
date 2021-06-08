@@ -1,10 +1,7 @@
 package PresentationLayer.FileHandler;
 
 import BusinessLayer.Board.Position;
-import BusinessLayer.Enemies.Boss;
-import BusinessLayer.Enemies.Enemy;
-import BusinessLayer.Enemies.Monster;
-import BusinessLayer.Enemies.Trap;
+import BusinessLayer.Enemies.*;
 import BusinessLayer.Players.*;
 import BusinessLayer.Tiles.*;
 import PresentationLayer.Callback.*;
@@ -39,7 +36,8 @@ public class TileFactory {
                 () -> new Monster('g', "Giant-Wright",1500, 100, 40,500,   5),
                 () -> new Monster('w', "White Walker", 2000, 150, 50, 1000, 6),
                 () -> new Boss('K', "Night's King", 5000, 300, 150, 5000, 8, 3),
-                () -> new Trap('D', "Death Trap", 500, 100, 20, 250, 1, 10)
+                () -> new Trap('D', "Death Trap", 500, 100, 20, 250, 1, 10),
+                () -> new Witch('W', "Morgen La Fey", 10000, 450, 200, 10000, 7, 2)
         );
 
         return enemies.stream().collect(Collectors.toMap(s -> s.get().getTile(), Function.identity()));
@@ -55,8 +53,8 @@ public class TileFactory {
                 () -> new Rogue("Bronn", 250, 35, 3, 50),
                 () -> new Hunter("Ygritte", 220, 30, 2, 6),
                 () -> new Hunter("Hawkeye", 200, 45, 1, 7),
-                () -> new Spy("Black Widow", 150,15, 7),
-                () -> new Spy("Agent 13", 175, 15, 5)
+                () -> new Spy("Black Widow", 150,15, 7, 7),
+                () -> new Spy("Agent 13", 175, 15, 6, 5)
         );
     }
 
@@ -79,11 +77,6 @@ public class TileFactory {
     }
 
     public Wall produceWall(Position position){
-        if(Math.random() < 0.2) {
-            return new BarbedWall(position);
-        }
-        else {
-            return new Wall(position);
-        }
+        return new Wall(position);
     }
 }

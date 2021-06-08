@@ -12,7 +12,6 @@ public class Empty extends Tile{
         super.initialize(position);
     }
 
-
     @Override
     public void accept(Visitor v) {
         v.visit(this);
@@ -23,4 +22,7 @@ public class Empty extends Tile{
 
     @Override
     public void visit(Enemy e) { }
+
+    @Override
+    public void visit(Empty e) { }
 }

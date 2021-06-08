@@ -2,9 +2,9 @@ package BusinessLayer.Players;
 
 import BusinessLayer.AbilityInterfaces.AbilityDamage;
 import BusinessLayer.AbilityInterfaces.HeroicUnit;
+import BusinessLayer.ActionHandler.Movement;
 import BusinessLayer.Board.Position;
 import BusinessLayer.Enemies.Enemy;
-import BusinessLayer.Tiles.BarbedWall;
 import BusinessLayer.Tiles.Unit;
 import BusinessLayer.VisitorPattern.Visitor;
 import PresentationLayer.Callback.*;
@@ -67,16 +67,6 @@ public abstract class Player extends Unit implements HeroicUnit {
         }
     }
 
-    public void visit(BarbedWall b){
-        int stubDamage = b.stub();
-        messageCallback.send(String.format("Barbed Wall rolled %d stub damage points", stubDamage));
-        int damageDone = Math.max(stubDamage - defend(),0);
-        messageCallback.send(String.format("%s encounter Barbed Wall, got Stub for %d damage", getName(), damageDone));
-        getHealth().reduceAmount(damageDone);
-        if(!alive()) {
-            onDeath();
-        }
-    }
 
 
 
@@ -124,18 +114,14 @@ public abstract class Player extends Unit implements HeroicUnit {
         level++;
     }
 
-    public void preformAction(char c,List<Enemy> enemies){
-        if(c == 'e'){
+    public void performAction(char c,List<Enemy> enemies){
+        if(c == Movement.castAbility){
             castAbility(this, enemies);
         }
         else {
             onPlayerTurn();
             positionCallback.Move(actionsMap.get(c).get());
         }
-        for (Enemy e : enemies){
-            e.preformAction(this);
-        }
-
     }
 
     @Override
@@ -174,5 +160,9 @@ public abstract class Player extends Unit implements HeroicUnit {
 
     public String describe() {
         return String.format("%s\t\tLevel: %d\t\tExperience: %d/%d", super.describe(), getLevel(), getExperience(), levelUpRequirement());
+    }
+
+    public AbilityDamage getAbilityDamage(){
+        return abilityDamage;
     }
 }

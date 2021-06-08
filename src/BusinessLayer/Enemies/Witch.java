@@ -1,21 +1,17 @@
 package BusinessLayer.Enemies;
 
 import BusinessLayer.AbilityInterfaces.HeroicUnit;
-import BusinessLayer.Board.Position;
+import BusinessLayer.ActionHandler.Movement;
 import BusinessLayer.Players.Player;
-import BusinessLayer.VisitorPattern.Visitor;
 
 import java.util.List;
 
-import BusinessLayer.ActionHandler.*;
+public class Witch extends Monster implements HeroicUnit {
+    private int combatTicks;
+    private int abilityFrequency;
 
-public class Boss extends Monster implements HeroicUnit {
-    private Integer abilityFrequency;
-    private Integer combatTicks;
-
-
-    public Boss(char tile, String name, int healthPool, int attackPoints, int defensePoints, int experienceValue, int visionRange, int abilityFrequency) {
-        super(tile, name, healthPool, attackPoints, defensePoints, experienceValue, visionRange);
+    public Witch(char tile, String name, int healthPool, int attack, int defense, int experienceValue, int visionRange, int abilityFrequency) {
+        super(tile, name, healthPool, attack, defense, experienceValue, visionRange);
         this.abilityFrequency = abilityFrequency;
         this.combatTicks = 0;
     }
@@ -40,15 +36,12 @@ public class Boss extends Monster implements HeroicUnit {
     }
     @Override
     public void castAbility(Player player, List<Enemy> enemies) {
-        messageCallback.send(String.format("%s shoots %s for %d damage", getName(), player.getName(), getAttack()));
-        int damageDone = Math.max(getAttack() - player.defend(),0);
-        messageCallback.send(String.format("%s hit %s for %d damage", getName(), player.getName(), damageDone));
-        player.getHealth().reduceAmount(damageDone);
+        int damageStolen = player.getHealth().getResourcePool()/10;
+        messageCallback.send(String.format("%s still %d health from %s healing for %d", getName(), damageStolen,player.getName(), damageStolen));
+        getHealth().addAmount(damageStolen);
+        player.getHealth().reduceAmount(damageStolen);
         if(!player.alive()){
             player.onDeath();
         }
     }
-
-
-
 }

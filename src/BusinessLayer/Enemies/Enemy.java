@@ -2,7 +2,6 @@ package BusinessLayer.Enemies;
 
 import BusinessLayer.Players.Player;
 import BusinessLayer.Board.Position;
-import BusinessLayer.Tiles.BarbedWall;
 import BusinessLayer.Tiles.Unit;
 import BusinessLayer.VisitorPattern.Visitor;
 import PresentationLayer.Callback.MessageCallback;
@@ -25,7 +24,7 @@ public abstract class Enemy extends Unit {
         return experienceValue;
     }
     
-    public abstract void preformAction(Player player);
+    public abstract void performAction(Player player, List<Enemy> enemies);
 
     @Override
     public void onDeath() {
@@ -40,8 +39,6 @@ public abstract class Enemy extends Unit {
     @Override
     public void visit(Enemy e) { }
 
-    @Override
-    public void visit(BarbedWall b){ }
 
     @Override
     public void accept(Visitor v) {

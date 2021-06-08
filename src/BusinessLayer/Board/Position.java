@@ -54,4 +54,13 @@ public class Position implements Comparable<Position> {
     public int compareTo(Position o) {
         return (Y < o.Y) ? -1 : ((Y > o.Y) ? 1 : ((X < o.X) ? -1 : ((X > o.X) ? 1 : 0)));
     }
+
+
+    public boolean equals(Object o){
+        return toString().equals(o.toString());
+    }
+
+    public String toString(){
+        return String.format("(%d, %d)", X,Y);
+    }
 }

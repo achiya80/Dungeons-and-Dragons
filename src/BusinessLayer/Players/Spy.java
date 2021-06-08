@@ -10,14 +10,14 @@ public class Spy extends Player{
     private Bullets bullets;
 
     private static final int ATTACK_BONUS = 1;
-    private static final int DEFENSE_BONUS = 15;
+    private static final int DEFENSE_BONUS = 5;
     private static final int HEALTH_BONUS = 2;
 
 
-    public Spy(String name, int healthPool, Integer attack, Integer defense) {
+    public Spy(String name, int healthPool, int attack, int defense, int bulletsCost) {
         super(name, healthPool, attack, defense, "Rain Of Bullets");
         setAbilityDamage(() -> getDefense());
-        this.bullets = new Bullets(10*getLevel());
+        this.bullets = new Bullets(10*getLevel(), bulletsCost);
     }
 
 

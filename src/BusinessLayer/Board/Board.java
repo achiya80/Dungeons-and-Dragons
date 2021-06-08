@@ -3,6 +3,7 @@ package BusinessLayer.Board;
 import BusinessLayer.Tiles.Tile;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Board {
     Comparator<Tile> comparator = new Comparator<Tile>() {public int compare(Tile o1, Tile o2) { return o1.compareTo(o2); }};
@@ -18,17 +19,10 @@ public class Board {
     }
 
     public String toString(){
-        String board = "";
         Tiles.sort(comparator);
-        for(int i = 0;i < Tiles.size();i++){
-            board+=Tiles.get(i).toString();
-            if(i < Tiles.size() - 1){
-                if(Tiles.get(i).getPosition().getY() < Tiles.get(i+1).getPosition().getY()){
-                    board += "\n";
-                }
-            }
-        }
-        return board;
+        int limX = Tiles.stream().max(comparator).stream().findFirst().get().getPosition().getX();
+        return Tiles.stream().map(t -> t.getPosition().getX() == limX ? t.toString()+"\n" : t.toString())
+                .reduce("", (acc, str) -> acc+str);
     }
 
     public void addTile(Tile t){
