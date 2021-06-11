@@ -7,12 +7,10 @@ import java.util.List;
 
 public class Warrior extends Player {
 
-    private Cooldown cooldown;
-
     private static final int ATTACK_BONUS = 2;
     private static final int DEFENSE_BONUS = 1;
     private static final int HEALTH_BONUS = 5;
-
+    private Cooldown cooldown;
 
     public Warrior(String name, int healthPool, int attackPoints, int defensePoints, int cooldownPool) {
         super(name, healthPool, attackPoints, defensePoints, "Avenger's Shield");
@@ -20,6 +18,9 @@ public class Warrior extends Player {
         super.setAbilityDamage(() -> getHealth().getResourcePool()/10);
     }
 
+    public Cooldown getCooldown() {
+        return cooldown;
+    }
 
     @Override
     public void castAbility(Player player, List<Enemy> enemies) {
@@ -45,25 +46,27 @@ public class Warrior extends Player {
         super.levelUp();
         getCooldown().uponLevelingUp();
     }
+
     @Override
     public void onPlayerTurn() {
         getCooldown().onGameTick();
     }
 
-    public Cooldown getCooldown() {
-        return cooldown;
-    }
-
-    public String describe(){
-        return String.format("%s\t\t %s", super.describe(), getCooldown());
-    }
-
+    @Override
     protected int gainHealth(){ return super.gainHealth() + getLevel()*HEALTH_BONUS; }
+
+    @Override
     protected int gainAttack(){
         return super.gainAttack() + getLevel() * ATTACK_BONUS;
     }
+
+    @Override
     protected int gainDefense(){
         return super.gainDefense() + getLevel() * DEFENSE_BONUS;
     }
 
+    @Override
+    public String describe(){
+        return String.format("%s\t\t %s", super.describe(), getCooldown());
+    }
 }

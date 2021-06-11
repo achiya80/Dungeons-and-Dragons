@@ -10,12 +10,12 @@ import java.util.List;
 import BusinessLayer.ActionHandler.*;
 
 public class Boss extends Monster implements HeroicUnit {
-    private Integer abilityFrequency;
-    private Integer combatTicks;
 
+    private int abilityFrequency;
+    private int combatTicks;
 
-    public Boss(char tile, String name, int healthPool, int attackPoints, int defensePoints, int experienceValue, int visionRange, int abilityFrequency) {
-        super(tile, name, healthPool, attackPoints, defensePoints, experienceValue, visionRange);
+    public Boss(char tile, String name, int healthPool, int attack, int defense, int experienceValue, int visionRange, int abilityFrequency) {
+        super(tile, name, healthPool, attack, defense, experienceValue, visionRange);
         this.abilityFrequency = abilityFrequency;
         this.combatTicks = 0;
     }
@@ -36,8 +36,8 @@ public class Boss extends Monster implements HeroicUnit {
             combatTicks=0;
             positionCallback.Move(actionsMap.get(Movement.randomMovement()).get());
         }
-
     }
+
     @Override
     public void castAbility(Player player, List<Enemy> enemies) {
         messageCallback.send(String.format("%s shoots %s for %d damage", getName(), player.getName(), getAttack()));

@@ -9,9 +9,7 @@ import java.util.stream.Collectors;
 public class Arrows extends AbilityResource {
 
     private static final String RESOURCE_NAME = "Arrows";
-
     private static final int MAX_TICKS = 10;
-
     private int ticksCount;
 
     public Arrows(int resourceAmount, int range) {

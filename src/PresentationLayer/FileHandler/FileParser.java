@@ -31,7 +31,7 @@ public class FileParser {
     }
 
 
-    public static char[][] ConvertListToArray(List<String> l){
+    private static char[][] ConvertListToArray(List<String> l){
         if(l.size() == 0) return null;
         char[][] c = new char[l.size()][l.get(0).length()];
         int i = 0;

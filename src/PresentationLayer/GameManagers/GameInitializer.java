@@ -20,15 +20,15 @@ public class GameInitializer {
             for(int j = 0;j < c[0].length;j++){
                 Position position = new Position(j, i);
                 char tile = c[i][j];
-                if(tile == '.'){
+                if(tile == Empty.EMPTY_TILE){
                     Empty e = tileFactory.produceEmpty(position);
                     board.addTile(e);
                 }
-                else if(tile == '#'){
+                else if(tile == Wall.WALL_TILE){
                     Wall w = tileFactory.produceWall(position);
                     board.addTile(w);
                 }
-                else if(tile == '@'){
+                else if(tile == Player.PLAYER_TILE){
                     player.initialize(position, (msg) -> System.out.println(msg),() -> level.onPlayerDeath(), (pos) -> player.interact(board.getTile(pos)));
                     board.addTile(player);
                 }

@@ -9,7 +9,6 @@ public class Hunter extends Player {
 
     private static final int ATTACK_BONUS = 2;
     private static final int DEFENSE_BONUS = 1;
-
     private Arrows arrows;
 
     public Hunter(String name, int healthPool, int attack, int defense, int range) {
@@ -18,6 +17,9 @@ public class Hunter extends Player {
         this.arrows = new Arrows(10*getLevel(),range);
     }
 
+    public Arrows getArrows(){
+        return arrows;
+    }
 
     @Override
     public void castAbility(Player player, List<Enemy> enemies) {
@@ -54,20 +56,22 @@ public class Hunter extends Player {
         super.levelUp();
     }
 
+    @Override
     public void onPlayerTurn(){
         arrows.onGameTick(getLevel());
     }
 
+    @Override
     protected int gainAttack(){
         return super.gainAttack() + getLevel() * ATTACK_BONUS;
     }
+
+    @Override
     protected int gainDefense(){
         return super.gainDefense() + getLevel() * DEFENSE_BONUS;
     }
-    public Arrows getArrows(){
-        return arrows;
-    }
 
+    @Override
     public String describe(){
         return String.format("%s  %s",super.describe(), getArrows());
     }

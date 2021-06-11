@@ -2,10 +2,7 @@ package BusinessLayer.NumericGenerators;
 
 public class DeterministicGenerator extends NumericGenerator{
 
-    public DeterministicGenerator(){
-
-    }
-
+    @Override
     public int generate(int bound){
         return bound-1;
     }

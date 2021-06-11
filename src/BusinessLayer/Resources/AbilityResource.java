@@ -9,9 +9,7 @@ import java.util.stream.Collectors;
 public class AbilityResource extends Resource {
 
     protected int range;
-
     protected String resourceName;
-
     protected int cost;
 
     protected AbilityResource(int resourcePool, int resourceAmount, int range, String resourceName, int cost) {
@@ -20,12 +18,22 @@ public class AbilityResource extends Resource {
         this.resourceName = resourceName;
         this.cost = cost;
     }
+
     protected AbilityResource(int resourcePool, int range, String resourceName, int cost) {
         super(resourcePool);
         this.range = range;
         this.resourceName = resourceName;
         this.cost = cost;
     }
+
+    public String getResourceName() {
+        return resourceName;
+    }
+
+    public int getCost(){
+        return cost;
+    }
+
     public List<Enemy> filterRange(Position position, List<Enemy> enemies){
         return enemies.stream().filter(e -> position.Range(e.getPosition()) < range).collect(Collectors.toList());
     }
@@ -44,14 +52,5 @@ public class AbilityResource extends Resource {
     public String toString(){
         return resourceName + ": " + super.toString();
     }
-
-    public String getResourceName() {
-        return resourceName;
-    }
-
-    public int getCost(){
-        return cost;
-    }
-
 
 }

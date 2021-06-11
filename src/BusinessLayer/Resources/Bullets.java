@@ -1,10 +1,9 @@
 package BusinessLayer.Resources;
 
 public class Bullets extends AbilityResource{
+
     private static final String RESOURCE_NAME = "Bullets";
-
     private static final int MAX_TICKS = 5;
-
     private int ticksCount;
 
     public Bullets(int resourceAmount, int cost) {
@@ -12,6 +11,7 @@ public class Bullets extends AbilityResource{
         this.ticksCount = 0;
     }
 
+    @Override
     public void uponLevelingUp(){
         addAmount(10);
     }

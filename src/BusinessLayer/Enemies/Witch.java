@@ -7,6 +7,7 @@ import BusinessLayer.Players.Player;
 import java.util.List;
 
 public class Witch extends Monster implements HeroicUnit {
+
     private int combatTicks;
     private int abilityFrequency;
 
@@ -32,8 +33,8 @@ public class Witch extends Monster implements HeroicUnit {
             combatTicks=0;
             positionCallback.Move(actionsMap.get(Movement.randomMovement()).get());
         }
-
     }
+
     @Override
     public void castAbility(Player player, List<Enemy> enemies) {
         int damageStolen = player.getHealth().getResourcePool()/10;

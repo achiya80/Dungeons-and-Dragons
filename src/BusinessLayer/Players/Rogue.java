@@ -7,15 +7,19 @@ import java.util.List;
 
 public class Rogue extends Player {
 
-    private Energy energy;
-
     private static final int ATTACK_BONUS = 3;
+    private Energy energy;
 
     public Rogue(String name, int healthPool, int attack, int defense, int energyCost) {
         super(name, healthPool, attack, defense,"Fan of Knives");
         this.energy = new Energy(energyCost);
         setAbilityDamage(() -> getAttack());
     }
+
+    public Energy getEnergy(){
+        return energy;
+    }
+
     @Override
     public void castAbility(Player player, List<Enemy> enemies) {
         if(getEnergy().isAbleToCast()){
@@ -38,16 +42,17 @@ public class Rogue extends Player {
         getEnergy().uponLevelingUp();
     }
 
+    @Override
     public void onPlayerTurn(){
         getEnergy().onGameTick();
     }
-    public Energy getEnergy(){
-        return energy;
-    }
+
+    @Override
     protected int gainAttack(){
         return super.gainAttack() + getLevel() * ATTACK_BONUS;
     }
 
+    @Override
     public String describe(){
         return String.format("%s   %s", super.describe(), getEnergy());
     }

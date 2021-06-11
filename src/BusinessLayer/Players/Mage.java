@@ -10,7 +10,6 @@ public class Mage extends Player {
 
     private static final int MANA_POOL_BONUS = 25;
     private static final int SPELL_POWER_BONUS = 10;
-
     private int hitsCount;
     private Mana mana;
 
@@ -22,11 +21,15 @@ public class Mage extends Player {
         this.mana = new Mana(manaPool, abilityRange,manaCost, spellPower);
     }
 
+    public Mana getMana() {
+        return mana;
+    }
 
     @Override
     public void onPlayerTurn() {
         getMana().onGameTick(getLevel());
     }
+
     @Override
     public void castAbility(Player player, List<Enemy> enemies) {
         if(getMana().isAbleToCast()) {
@@ -45,6 +48,7 @@ public class Mage extends Player {
             messageCallback.send(String.format("%s tried to cast %s, but there was not enough %s: %d/%d", getName(),getABILITY_NAME(),getMana().getResourceName(),getMana().getResourceAmount(),getMana().getCost()));
         }
     }
+
     @Override
     public void levelUp() {
         int spellPowerGained = gainSpellPower();
@@ -64,10 +68,7 @@ public class Mage extends Player {
         return getLevel()*MANA_POOL_BONUS;
     }
 
-    public Mana getMana() {
-        return mana;
-    }
-
+    @Override
     public String describe(){
         return String.format("%s\t\t %s: %s", super.describe(), getMana().getResourceName(),getMana());
     }

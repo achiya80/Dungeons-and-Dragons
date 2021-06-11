@@ -13,9 +13,9 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class TileFactory {
+
     private List<Supplier<Player>> playersList;
     private Map<Character, Supplier<Enemy>> enemiesMap;
-    private Player selected;
 
     public TileFactory(){
         playersList = initPlayers();

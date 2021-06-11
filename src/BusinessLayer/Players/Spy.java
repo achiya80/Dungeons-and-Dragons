@@ -7,12 +7,10 @@ import java.util.List;
 
 public class Spy extends Player{
 
-    private Bullets bullets;
-
     private static final int ATTACK_BONUS = 1;
     private static final int DEFENSE_BONUS = 5;
     private static final int HEALTH_BONUS = 2;
-
+    private Bullets bullets;
 
     public Spy(String name, int healthPool, int attack, int defense, int bulletsCost) {
         super(name, healthPool, attack, defense, "Rain Of Bullets");
@@ -20,6 +18,9 @@ public class Spy extends Player{
         this.bullets = new Bullets(10*getLevel(), bulletsCost);
     }
 
+    public Bullets getBullets() {
+        return bullets;
+    }
 
     @Override
     public void levelUp() {
@@ -61,19 +62,20 @@ public class Spy extends Player{
         return e;
     }
 
-    public Bullets getBullets() {
-        return bullets;
-    }
-
+    @Override
     protected int gainHealth(){ return super.gainHealth() + getLevel()*HEALTH_BONUS; }
+
+    @Override
     protected int gainAttack(){
         return super.gainAttack() + getLevel() * ATTACK_BONUS;
     }
+
+    @Override
     protected int gainDefense(){
         return super.gainDefense() + getLevel() * DEFENSE_BONUS;
     }
 
-
+    @Override
     public String describe(){
         return String.format("%s  %s",super.describe(), getBullets());
     }

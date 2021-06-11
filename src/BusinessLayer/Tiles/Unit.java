@@ -32,10 +32,6 @@ public abstract class Unit extends Tile{
     protected PositionCallback positionCallback;
     protected static NumericGenerator ng = NumericGenerator.getInstance(true);
 
-
-
-
-
     public Unit(char tile, String name, int healthPool, int attack, int defense) {
         super(tile);
         this.name = name;
@@ -51,9 +47,26 @@ public abstract class Unit extends Tile{
         this.positionCallback = positionCallback;
     }
 
+    public Resource getHealth() {
+        return health;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
     public void setMessageCallback(MessageCallback messageCallback) {
         this.messageCallback = messageCallback;
     }
+
     public void setPositionCallback(PositionCallback positionCallback) {
         this.positionCallback = positionCallback;
     }
@@ -62,7 +75,13 @@ public abstract class Unit extends Tile{
         this.deathCallback = deathCallback;
     }
 
+    public void setAttack(int attack) {
+        this.attack += attack;
+    }
 
+    public void setDefense(int defense) {
+        this.defense += defense;
+    }
 
     protected int attack(){
         int result = ng.generate(attack);
@@ -85,61 +104,17 @@ public abstract class Unit extends Tile{
         u.getHealth().reduceAmount(damageDone);
     }
 
-
-
-
-
-
     public void interact(Tile t){
         t.accept(this);
     }
-
-
-
-
-
-    public abstract void visit(Enemy e);
-    public abstract void visit(Player p);
 
     public boolean alive() {
         return getHealth().getResourceAmount() > 0;
     }
 
-
-
-
-
-    public Resource getHealth() {
-        return health;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public int getAttack() {
-        return attack;
-    }
-
-    public int getDefense() {
-        return defense;
-    }
-
-
-
-    public void setAttack(int attack) {
-        this.attack += attack;
-    }
-    public void setDefense(int defense) {
-        this.defense += defense;
-    }
-
-
     public String describe() {
         return String.format("%s\t\tHealth: %s\t\tAttack: %d\t\tDefense: %d", getName(), getHealth(), getAttack(), getDefense());
     }
-
 
     public static void DeterministicForTesting(){
         ng = NumericGenerator.getInstance(false);

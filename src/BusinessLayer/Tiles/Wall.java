@@ -7,24 +7,17 @@ import BusinessLayer.VisitorPattern.Visitor;
 
 public class Wall extends Tile{
 
+    public static final char WALL_TILE = '#';
 
     public Wall(Position position){
-        super('#');
+        super(WALL_TILE);
         super.initialize(position);
     }
-
-
 
     @Override
     public void accept(Visitor v) {
         v.visit(this);
     }
-
-    @Override
-    public void visit(Player p) { }
-
-    @Override
-    public void visit(Enemy e) { }
 
     @Override
     public void visit(Empty e) { }
