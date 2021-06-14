@@ -1,5 +1,8 @@
 package Tests.TilesTests;
 
+import BusinessLayer.Board.Position;
+import BusinessLayer.Tiles.Empty;
+import BusinessLayer.Tiles.Tile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,10 +12,12 @@ class EmptyTest {
 
     @BeforeEach
     void setUp() {
+
     }
 
     @Test
     void accept() {
+
     }
 
     @Test
