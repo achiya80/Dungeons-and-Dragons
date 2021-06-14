@@ -55,8 +55,8 @@ public class Mage extends Player {
         int manaPoolGained = gainManaPool();
         super.levelUp();
         messageCallback.send(String.format("+%d Mana Pool +%d Spell Power", manaPoolGained,spellPowerGained));
-        getMana().uponLevelingUp();
         getMana().setResourcePool(manaPoolGained);
+        getMana().uponLevelingUp();
         getMana().setSpellPower(spellPowerGained);
     }
 
