@@ -47,9 +47,7 @@ public class Position implements Comparable<Position> {
     }
 
     @Override
-    public int compareTo(Position o) {
-        return (Y < o.Y) ? -1 : ((Y > o.Y) ? 1 : ((X < o.X) ? -1 : ((X > o.X) ? 1 : 0)));
-    }
+    public int compareTo(Position o) { return (Y < o.Y) ? -1 : ((Y > o.Y) ? 1 : ((X < o.X) ? -1 : ((X > o.X) ? 1 : 0))); }
 
     @Override
     public boolean equals(Object o){
