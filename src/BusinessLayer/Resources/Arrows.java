@@ -23,7 +23,7 @@ public class Arrows extends AbilityResource {
     }
 
     public void uponLevelingUp(int level){
-        addAmount(level);
+        addAmount(10*level);
     }
 
     public void onGameTick(int level){

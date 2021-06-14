@@ -54,6 +54,6 @@ public class Rogue extends Player {
 
     @Override
     public String describe(){
-        return String.format("%s   %s", super.describe(), getEnergy());
+        return String.format("%s  %s", super.describe(), getEnergy());
     }
 }
