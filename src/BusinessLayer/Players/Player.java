@@ -108,12 +108,12 @@ public abstract class Player extends Unit implements HeroicUnit {
 
     // Player level up
     protected void levelUp(){
-        messageCallback.send(String.format("%s reached level %d: +%d Health +%d Attack +%d Defense", getName(), level+1, gainHealth(), gainAttack(), gainDefense()));
+        level++;
         getHealth().setResourcePool(gainHealth());
         setAttack(gainAttack());
         setDefense(gainDefense());
         getHealth().uponLevelingUp();
-        level++;
+        messageCallback.send(String.format("%s reached level %d: +%d Health +%d Attack +%d Defense", getName(), level, gainHealth(), gainAttack(), gainDefense()));
     }
 
     public void performAction(char c,List<Enemy> enemies){

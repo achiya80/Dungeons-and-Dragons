@@ -51,13 +51,11 @@ public class Mage extends Player {
 
     @Override
     public void levelUp() {
-        int spellPowerGained = gainSpellPower();
-        int manaPoolGained = gainManaPool();
         super.levelUp();
-        messageCallback.send(String.format("+%d Mana Pool +%d Spell Power", manaPoolGained,spellPowerGained));
-        getMana().setResourcePool(manaPoolGained);
+        getMana().setResourcePool(gainManaPool());
         getMana().uponLevelingUp();
-        getMana().setSpellPower(spellPowerGained);
+        getMana().setSpellPower(gainSpellPower());
+        messageCallback.send(String.format("+%d Mana Pool +%d Spell Power", gainManaPool(), gainSpellPower()));
     }
 
     protected int gainSpellPower(){
