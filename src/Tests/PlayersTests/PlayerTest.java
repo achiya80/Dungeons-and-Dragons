@@ -23,11 +23,7 @@ class PlayerTest {
     }
 
     @Test
-    void onPlayerTurn() {
-    }
-
-    @Test
-    void castAbility() {
+    void onPlayerTurn() {//abstract
     }
 
     @Test
