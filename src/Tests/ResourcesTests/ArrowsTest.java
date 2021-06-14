@@ -55,7 +55,7 @@ class ArrowsTest {
     void uponLevelingUp() {
         int level = 2;
         a.uponLevelingUp(2);
-        assertEquals(7, a.getResourceAmount(), "didn't add amount");
+        assertEquals(25, a.getResourceAmount(), "didn't add amount");
     }
 
     @Test
