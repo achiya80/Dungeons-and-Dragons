@@ -18,7 +18,7 @@ public abstract class Enemy extends Unit {
     }
 
     public void initialize(Position position, MessageCallback messageCallback){
-        super.initialize(position, messageCallback,null, null);
+        super.initialize(position, messageCallback,deathCallback, positionCallback);
     }
 
     public int getExperienceValue() {

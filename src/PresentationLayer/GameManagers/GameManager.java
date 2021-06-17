@@ -14,12 +14,10 @@ public class GameManager {
 
     private static Scanner reader = new Scanner(System.in);
 
-    public static void main(String[] args){
-        //if(args.length == 0){
-        ///     throw new Exception("input files directory");
-        //  }
-        args = new String[1];
-        args[0] = "C:\\Users\\achiy\\levels_dir";
+    public static void main(String[] args) {
+        if(args.length == 0){
+            throw new IllegalArgumentException("input levels directory");
+        }
         System.out.println("choose from players");
         TileFactory tileFactory = new TileFactory();
         AtomicInteger i = new AtomicInteger(1);
@@ -29,10 +27,10 @@ public class GameManager {
         tileFactory.listPlayers().stream().forEach(p -> selected.add(String.format("%d", i.getAndIncrement())));
         String select = reader.nextLine();
         while(!selected.contains(select)){
-            select = reader.nextLine();
             System.out.println("not a member");
             i.set(1);
             tileFactory.listPlayers().stream().forEach(p -> System.out.println((i.getAndIncrement()) + ".  " + p.describe()));
+            select = reader.nextLine();
         }
         Player player = tileFactory.producePlayer(Integer.valueOf(select)-1);
         File folder = new File(args[0]);

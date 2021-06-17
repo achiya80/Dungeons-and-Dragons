@@ -40,9 +40,7 @@ class MonsterTest {
         m.setPositionCallback((pos) -> onPositionCallback(m, pos));
         m.performAction(p, null);
         assertEquals(new Position(7,8),m.getPosition(), "enemy didn't track player");// random, stay
-
     }
-
 
 
     void onMessageCallback(String msg) {
