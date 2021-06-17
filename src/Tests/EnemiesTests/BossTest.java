@@ -83,8 +83,6 @@ class BossTest {
         assertEquals(500, p.getHealth().getResourceAmount(),"player life was reduced");
         b1.performAction(p, enemies);
         assertEquals(205, p.getHealth().getResourceAmount(),"player life was not reduced");
-
-
     }
 
     void onMessageCallback(String msg){

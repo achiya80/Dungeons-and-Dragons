@@ -14,12 +14,10 @@ public class GameManager {
 
     private static Scanner reader = new Scanner(System.in);
 
-    public static void main(String[] args){
-        //if(args.length == 0){
-        ///     throw new Exception("input levels directory");
-        //  }
-        args = new String[1];
-        args[0] = "C:\\Users\\achiy\\levels_dir";
+    public static void main(String[] args) {
+        if(args.length == 0){
+            throw new IllegalArgumentException("input levels directory");
+        }
         System.out.println("choose from players");
         TileFactory tileFactory = new TileFactory();
         AtomicInteger i = new AtomicInteger(1);

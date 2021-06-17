@@ -39,23 +39,23 @@ class EnemyTest {
         e1 = new Boss('K', "Night's King", 5000, 300, 150, 5000, 8, 3);
         e1.initialize(new Position(2,1), (msg) -> onMessageCallback(msg));
         e1.setDeathCallback(() -> onEnemyDeathCallback(e1));
-        e1.setPositionCallback((pos) -> onPositionCallback(pos));
+        e1.setPositionCallback((pos) -> onPositionCallback(e1, pos));
         e2 = new Boss('M', "The Mountain", 1000, 60, 25,  500, 6, 5);
         e2.initialize(new Position(1,1), (msg) -> onMessageCallback(msg));
         e2.setDeathCallback(() -> onEnemyDeathCallback(e2));
-        e2.setPositionCallback((pos) -> onPositionCallback(pos));
+        e2.setPositionCallback((pos) -> onPositionCallback(e2, pos));
         e3 = new Boss('C', "Queen Cersei", 100, 10, 1,1000, 1, 8);
         e3.initialize(new Position(0,1), (msg) -> onMessageCallback(msg));
         e3.setDeathCallback(() -> onEnemyDeathCallback(e3));
-        e3.setPositionCallback((pos) -> onPositionCallback(pos));
+        e3.setPositionCallback((pos) -> onPositionCallback(e3, pos));
         e4 = new Monster('k', "Lannister Knight", 200, 14, 8, 50,   4);
         e4.initialize(new Position(5,1), (msg) -> onMessageCallback(msg));
         e4.setDeathCallback(() -> onEnemyDeathCallback(e4));
-        e4.setPositionCallback((pos) -> onPositionCallback(pos));
+        e4.setPositionCallback((pos) -> onPositionCallback(e4, pos));
         e5 = new Trap('Q', "Queen's Trap", 250, 51, 10, 100, 3, 10);
         e5.initialize(new Position(5,5), (msg) -> onMessageCallback(msg));
         e5.setDeathCallback(() -> onEnemyDeathCallback(e5));
-        e5.setPositionCallback((pos) -> onPositionCallback(pos));
+        e5.setPositionCallback((pos) -> onPositionCallback(e5, pos));
         p = new Warrior("test Player", 1000,51,6,3);
         p.initialize(new Position(1,2), (msg) -> onMessageCallback(msg), () -> onPlayerDeathCallback(), (pos) -> onMessageCallback(pos.toString()));
         enemies = Arrays.asList(e1,e2,e3,e4,e5);
@@ -67,9 +67,25 @@ class EnemyTest {
     }
 
     @Test
-    void performAction() {
-        e5.performAction(p, enemies);
+    void performActionMoveRandom() {
+        e4.performAction(p, enemies);
+        assertEquals(1000, p.getHealth().getResourceAmount(),"enemy hit player but player wasn't on his vision range");
+        assertEquals(new Position(5, 1), e4.getPosition(), "enemy moved after action but he should stay in the same position");
+    }
+
+    @Test
+    void performActionTrackPlayer() {
+        e4.initialize(new Position(2,4), (msg) -> onMessageCallback(msg));
+        e4.performAction(p, enemies);
         assertEquals(1000, p.getHealth().getResourceAmount(),"enemy hot player but player wasn't on his vision range");
+        assertEquals(new Position(2,3), e4.getPosition(), "enemy should move up");
+    }
+
+    @Test
+    void performActionHitPlayer() {
+        e4.initialize(new Position(2,2), (msg) -> onMessageCallback(msg));
+        e4.performAction(p, enemies);
+        assertEquals(992, p.getHealth().getResourceAmount(),"enemy should have hit player because player is next to him");
     }
 
     @Test
@@ -117,7 +133,7 @@ class EnemyTest {
 
     void onEnemyDeathCallback(Enemy e){ enemies = enemies.stream().filter(enemy -> enemy != e).collect(Collectors.toList()); }
 
-    void onPositionCallback(Position p){
-
+    void onPositionCallback(Enemy e, Position p){
+        e.interact((this.p.getPosition().equals(p)) ? this.p : new Empty(p));
     }
 }
