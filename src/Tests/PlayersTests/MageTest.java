@@ -50,6 +50,7 @@ class MageTest {
         assertEquals(80,enemies.get(0).getHealth().getResourceAmount(),"Health amount is not correct");
         assertEquals(80,enemies.get(1).getHealth().getResourceAmount(),"Health amount is not correct");
         assertEquals(80,enemies.get(2).getHealth().getResourceAmount(),"Health amount is not correct");
+        assertEquals(2,mage1.getMana().getResourceAmount(),"Mana amount is not correct");
     }
     @Test
     void castAbility2() {
@@ -57,48 +58,44 @@ class MageTest {
         assertEquals(80,enemies.get(0).getHealth().getResourceAmount(),"Health amount is not correct");
         assertEquals(78,enemies.get(1).getHealth().getResourceAmount(),"Health amount is not correct");
         assertEquals(80,enemies.get(2).getHealth().getResourceAmount(),"Health amount is not correct");
+        assertEquals(1,mage1.getMana().getResourceAmount(),"Mana amount is not correct");
     }
 
     @Test
     void levelUp() {
         mage1.levelUp();
         assertEquals(2,mage1.getLevel(),"hunter level is not correct");
-        assertEquals(510,mage1.getHealth().getResourceAmount(),"hunter health is not correct");
-        assertEquals(34,mage1.getAttack(),"hunter attack points is not correct");
-        assertEquals(5,mage1.getDefense(),"hunter defense points not correct");
-        assertEquals(30,mage1.getMana().getResourcePool(),"hunter defense points not correct");
-        assertEquals(12,mage1.getMana().getResourceAmount(),"hunter defense points not correct");///////check this
-        assertEquals(13,mage1.getMana().getSpellPower(),"hunter defense points not correct");
-
-
+        assertEquals(520,mage1.getHealth().getResourceAmount(),"hunter health is not correct");
+        assertEquals(38,mage1.getAttack(),"hunter attack points is not correct");
+        assertEquals(6,mage1.getDefense(),"hunter defense points not correct");
+        assertEquals(55,mage1.getMana().getResourcePool(),"hunter defense points not correct");
+        assertEquals(14,mage1.getMana().getResourceAmount(),"hunter defense points not correct");///////check this
+        assertEquals(23,mage1.getMana().getSpellPower(),"hunter defense points not correct");
     }
 
     @Test
     void gainSpellPower() {
         mage1.levelUp();
-
-        assertEquals(13,mage1.getMana().getSpellPower(),"hunter defense points not correct");
+        assertEquals(23,mage1.getMana().getSpellPower(),"hunter defense points not correct");
     }
 
     @Test
     void gainManaPool() {
         mage1.levelUp();
-        assertEquals(30,mage1.getMana().getResourcePool(),"hunter defense points not correct");
+        assertEquals(55,mage1.getMana().getResourcePool(),"hunter defense points not correct");
     }
 
     @Test
     void describe() {
     }
+
     void onMessageCallback(String msg){
         //System.out.println(msg);
     }
 
-
     void onDeathCallback(){
-
     }
 
     void onPositionCallback(Position position){
-
     }
 }

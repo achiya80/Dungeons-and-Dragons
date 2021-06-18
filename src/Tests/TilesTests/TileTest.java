@@ -73,7 +73,6 @@ class TileTest {
         assertEquals(monster.getHealth().getResourcePool() - p.getAttack() + monster.getDefense(), monster.getHealth().getResourceAmount(), "life of enemy was not reduce");
         assertEquals(new Position(0,1), monster.getPosition(),"compare to was not as expected, enemy didn't stay at the same position");
         assertEquals(new Position(1,0), p.getPosition(),"compare to was not as expected, enemy didn't stay at the same position");
-
     }
 
     @Test

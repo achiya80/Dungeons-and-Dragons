@@ -43,6 +43,7 @@ class HunterTest {
         assertEquals(52,enemies.get(0).getHealth().getResourceAmount(),"Health amount is not correct");
         assertEquals(80,enemies.get(1).getHealth().getResourceAmount(),"Health amount is not correct");
         assertEquals(80,enemies.get(2).getHealth().getResourceAmount(),"Health amount is not correct");
+        assertEquals(9,h1.getArrows().getResourceAmount(),"Health amount is not correct");
     }
     @Test
     void castAbilityRowsAmount() {
@@ -57,11 +58,12 @@ class HunterTest {
     void levelUp() {
         h1.levelUp();
         assertEquals(2,h1.getLevel(),"hunter level is not correct");
-        assertEquals(510,h1.getHealth().getResourceAmount(),"hunter health is not correct");
-        assertEquals(36,h1.getAttack(),"hunter attack points is not correct");
-        assertEquals(6,h1.getDefense(),"hunter defense points not correct");
-        assertEquals(20,h1.getArrows().getResourceAmount(),"hunter arrows amount points not correct");
+        assertEquals(520,h1.getHealth().getResourceAmount(),"hunter health is not correct");
+        assertEquals(42,h1.getAttack(),"hunter attack points is not correct");
+        assertEquals(8,h1.getDefense(),"hunter defense points not correct");
+        assertEquals(30,h1.getArrows().getResourceAmount(),"hunter arrows amount points not correct");
     }
+
     @Test
     void levelUpEnable() {
         h1.castAbility(h1,enemies);
@@ -70,19 +72,18 @@ class HunterTest {
 
     @Test
     void onPlayerTurn() {
-
     }
 
     @Test
     void gainAttack() {
         h1.levelUp();
-        assertEquals(36,h1.getAttack(),"hunter attack points is not correct");
+        assertEquals(42,h1.getAttack(),"hunter attack points is not correct");
     }
 
     @Test
     void gainDefense() {
         h1.levelUp();
-        assertEquals(6,h1.getDefense(),"hunter defense points not correct");
+        assertEquals(8,h1.getDefense(),"hunter defense points not correct");
     }
 
     @Test
@@ -92,12 +93,9 @@ class HunterTest {
     void onMessageCallback(String msg){
     }
 
-
     void onDeathCallback(){
-
     }
 
     void onPositionCallback(Position position){
-
     }
 }
