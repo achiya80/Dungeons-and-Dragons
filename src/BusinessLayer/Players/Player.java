@@ -74,7 +74,7 @@ public abstract class Player extends Unit implements HeroicUnit {
 
     // Deals damage to the enemy with ability
     protected void abilityDamage(Enemy e) {
-        int damageDone = abilityDamage.generateDamage() - e.defend();
+        int damageDone = Math.max(abilityDamage.generateDamage() - e.defend(),0);
         e.getHealth().reduceAmount(damageDone);
         messageCallback.send(String.format("%s hit %s for %d ability damage", getName(), e.getName(),damageDone));
         if(!e.alive()) {
