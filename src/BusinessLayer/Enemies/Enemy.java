@@ -35,6 +35,9 @@ public abstract class Enemy extends Unit {
     @Override
     public void visit(Player p) {
         super.battle(p);
+        if(!p.alive()){
+            p.onDeath();
+        }
     }
 
     @Override
