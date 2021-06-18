@@ -26,7 +26,17 @@ class BoardTest {
     }
 
     @Test
-    void testToString() {
+    void testToStringNotSorted() {
+        String expected = "..\n##\n";
+        assertEquals(expected, b.toString(), "the board to string isn't compatabole to expected");
+    }
+
+    @Test
+    void testToStringSorted() {
+        b = new Board();
+        List<Tile> tiles = Arrays.asList(new Empty(new Position(0,0)),new Empty(new Position(1,0)) ,
+                new Wall(new Position(0,1)) ,new Wall(new Position(1,1)));
+        tiles.stream().forEach(t -> b.addTile(t));
         String expected = "..\n##\n";
         assertEquals(expected, b.toString(), "the board to string isn't compatabole to expected");
     }

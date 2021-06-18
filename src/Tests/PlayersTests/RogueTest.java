@@ -57,18 +57,11 @@ class RogueTest {
         assertEquals(100,r1.getEnergy().getResourceAmount(),"rouge energy points not correct");
     }
 
-    @Test
-    void onPlayerTurn() {
-    }
 
     @Test
     void gainAttack() {
         r1.levelUp();
         assertEquals(44,r1.getAttack(),"rouge attack points is not correct");
-    }
-
-    @Test
-    void describe() {
     }
 
     void onMessageCallback(String msg){

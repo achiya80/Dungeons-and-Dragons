@@ -70,9 +70,6 @@ class HunterTest {
         assertEquals(1,h1.getLevel(),"hunter level is not correct");
     }
 
-    @Test
-    void onPlayerTurn() {
-    }
 
     @Test
     void gainAttack() {
@@ -84,10 +81,6 @@ class HunterTest {
     void gainDefense() {
         h1.levelUp();
         assertEquals(8,h1.getDefense(),"hunter defense points not correct");
-    }
-
-    @Test
-    void describe() {
     }
 
     void onMessageCallback(String msg){

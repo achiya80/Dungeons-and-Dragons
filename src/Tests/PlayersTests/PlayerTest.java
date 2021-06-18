@@ -47,18 +47,6 @@ class PlayerTest {
     }
 
     @Test
-    void initialize() {
-    }
-
-    @Test
-    void onPlayerTurn() {//abstract
-    }
-
-    @Test
-    void accept() {
-    }
-
-    @Test
     void PlayerVisitEmpty(){
         p1.interact(empty);
         assertEquals(new Position(1,0), empty.getPosition(), "Empty position should change");
@@ -97,40 +85,12 @@ class PlayerTest {
     }
 
     @Test
-    void addExperience() {//same as onKill
-    }
-
-    @Test
     void onDeath() {
         enemy1.interact(p2);
         assertEquals(4 ,p2.getHealth().getResourceAmount(), "player health score is not correct");
         enemy1.interact(p2);
         assertEquals(0 ,p2.getHealth().getResourceAmount(), "player should be dead");
         assertEquals(false ,p2.alive(), "player should be dead");
-    }
-
-    @Test
-    void levelUp() {//checked for every player type individualy in their test classes
-    }
-
-    @Test
-    void preformAction() {//preforming cast ability, checked for every player type individualy in their test classes
-    }
-
-    @Test
-    void gainHealth() {// checked for every player type individualy in their test classes
-    }
-
-    @Test
-    void gainAttack() {// checked for every player type individualy in their test classes
-    }
-
-    @Test
-    void gainDefense() {//checked for every player type individualy in their test classes
-    }
-
-    @Test
-    void describe() {// checked for every player type individualy in their test classes
     }
 
     void onMessageCallback(String msg){
@@ -141,6 +101,7 @@ class PlayerTest {
 
     void onPositionCallback(Position position){
     }
+
     void onEnemyDeathCallback(Enemy e){ }
 
 

@@ -30,6 +30,9 @@ public class Trap extends Enemy {
     }
 
     @Override
+    public void visit(Empty e){ }
+
+    @Override
     public String toString(){
         return (visible) ? super.toString() : ".";
     }

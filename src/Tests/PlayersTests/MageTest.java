@@ -41,10 +41,6 @@ class MageTest {
     }
 
     @Test
-    void onPlayerTurn() {
-    }
-
-    @Test
     void castAbility1() {
         mage1.castAbility(mage1,enemies);
         assertEquals(80,enemies.get(0).getHealth().getResourceAmount(),"Health amount is not correct");
@@ -83,10 +79,6 @@ class MageTest {
     void gainManaPool() {
         mage1.levelUp();
         assertEquals(55,mage1.getMana().getResourcePool(),"hunter defense points not correct");
-    }
-
-    @Test
-    void describe() {
     }
 
     void onMessageCallback(String msg){

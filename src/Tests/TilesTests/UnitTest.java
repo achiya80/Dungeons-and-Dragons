@@ -43,11 +43,8 @@ public class UnitTest {
     }
 
     @Test
-    void initialize() {
-    }
-
-    @Test
     void onDeathEnemy() {
+        monster1.setDeathCallback(() -> onDeathCallback());
         p1.interact(monster1);
         p1.interact(monster1);
         p1.interact(monster1);
@@ -60,9 +57,6 @@ public class UnitTest {
         assertEquals(false,p2.alive() ,"player should be dead");
     }
 
-    @Test
-    void Battle() {
-    }
 
     @Test
     void PlayerInteractEnemy() {
@@ -74,23 +68,6 @@ public class UnitTest {
         monster1.interact(p1);
         assertEquals( 496,p1.getHealth().getResourceAmount() ,"Helth score is not corect");
     }
-    @Test
-    void visit() {
-    }
-
-    @Test
-    void testVisit() {
-    }
-
-    @Test
-    void alive() {
-
-    }
-
-    @Test
-    void describe() {
-    }
-
 
     void onMessageCallback(String msg){
     }

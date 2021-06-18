@@ -69,17 +69,6 @@ class WarriorTest {
     }
 
     @Test
-    void onPlayerTurn() {
-
-    }
-
-    @Test
-    void describe() {
-       // assertEquals("Jon Snow  Health: 500  Attack:  30  Defense:  4  Level:  1  Experience:  0/50",(String.format("%s\t\tLevel: %d\t\tExperience: %d/%d"
-           //     ,"%s\t\tHealth: %s\t\tAttack: %d\t\tDefense: %d", w1.getName(), w1.getHealth(), w1.getAttack(), w1.getDefense(),w1.getLevel(), w1.getExperience(),50)),"warrior description is not correct");
-    }
-
-    @Test
     void gainHealth() {
         w1.levelUp();
         assertEquals(530,w1.getHealth().getResourceAmount(),"warrior health is not correct");
