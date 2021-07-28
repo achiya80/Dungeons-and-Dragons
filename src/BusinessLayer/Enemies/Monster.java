@@ -30,7 +30,7 @@ public class Monster extends Enemy{
     protected char playerTrackPattern(Player player){
         int dX= getPosition().RangeX(player.getPosition());
         int dY= getPosition().RangeY(player.getPosition());
-        return (Math.abs(dX)>Math.abs(dY)) ? (dX > 0) ? Movement.left : Movement.right : (dY > 0) ? Movement.up : Movement.down;
+        return (Math.abs(dX)>Math.abs(dY)) ? ((dX > 0) ? Movement.left : Movement.right) : ((dY > 0) ? Movement.up : Movement.down);
     }
 
 }

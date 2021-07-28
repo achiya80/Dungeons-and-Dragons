@@ -40,6 +40,7 @@ public class TileFactory {
                 () -> new Witch('W', "Morgen La Fey", 10000, 450, 200, 10000, 7, 2)
         );
 
+        enemies.stream().collect(Collectors.toMap(s -> s.get().getTile(), Function.identity()));
         return enemies.stream().collect(Collectors.toMap(s -> s.get().getTile(), Function.identity()));
     }
 

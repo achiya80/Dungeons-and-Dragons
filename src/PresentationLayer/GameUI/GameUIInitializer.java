@@ -1,4 +1,4 @@
-package PresentationLayer.GameManagers;
+package PresentationLayer.GameUI;
 
 import BusinessLayer.Board.Board;
 import BusinessLayer.Board.Position;
@@ -7,12 +7,13 @@ import BusinessLayer.Players.Player;
 import BusinessLayer.Tiles.Empty;
 import BusinessLayer.Tiles.Wall;
 import PresentationLayer.FileHandler.TileFactory;
+import PresentationLayer.GameManagers.GameLevel;
 
-public class GameInitializer {
+public class GameUIInitializer {
 
-    public static GameLevel Initialize(char[][] c, Player player){
+    public static GameUILevel Initialize(char[][] c, Player player){
 
-        GameLevel level = new GameLevel();
+        GameUILevel level = new GameUILevel();
         Board board = new Board();
         level.setGameBoard(board);
         level.setPlayer(player);
@@ -30,12 +31,12 @@ public class GameInitializer {
                     board.addTile(w);
                 }
                 else if(tile == Player.PLAYER_TILE){
-                    player.initialize(position, (msg) -> System.out.println(msg),() -> level.onPlayerDeath(), (pos) -> player.interact(board.getTile(pos)));
+                    player.initialize(position, (msg) -> level.getMessage(msg),() -> level.onPlayerDeath(), (pos) -> player.interact(board.getTile(pos)));
                     board.addTile(player);
                 }
                 else {
                     Enemy e = tileFactory.produceEnemy(tile, position,
-                            (msg) -> System.out.println(msg));
+                            (msg) -> level.getMessage(msg));
                     e.setDeathCallback(() -> level.onEnemyDeath(e));
                     e.setPositionCallback((p) -> e.interact(board.getTile(p)));
                     board.addTile(e);
@@ -45,8 +46,4 @@ public class GameInitializer {
         }
         return level;
     }
-
-
-
-
 }

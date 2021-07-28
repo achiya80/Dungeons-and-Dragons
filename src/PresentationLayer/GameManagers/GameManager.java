@@ -1,23 +1,36 @@
 package PresentationLayer.GameManagers;
 
+import BusinessLayer.ActionHandler.Movement;
+import BusinessLayer.Board.Position;
 import BusinessLayer.Players.Player;
 import PresentationLayer.FileHandler.FileParser;
 import PresentationLayer.FileHandler.TileFactory;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
 
 public class GameManager {
 
     private static Scanner reader = new Scanner(System.in);
 
     public static void main(String[] args) {
-        if(args.length == 0){
-            throw new IllegalArgumentException("input levels directory");
-        }
+        ///if(args.length == 0){
+     //       throw new IllegalArgumentException("input levels directory");
+      //  }
+        Map<Character, Supplier<Position>> actionsMap = new HashMap<>(){
+            {
+                put(Movement.down, () -> new Position(0,0).Down());
+                put(Movement.up, () -> new Position(0,0).Up());
+                put(Movement.right, () -> new Position(0,0).Right());
+                put(Movement.left, () -> new Position(0,0).Left());
+                put(Movement.stay, () -> new Position(0,0).NoOperation());
+            }
+        };
+
+        args = new String[1];
+        args[0] = "C:\\Users\\achiy\\levels_dir";
         System.out.println("choose from players");
         TileFactory tileFactory = new TileFactory();
         AtomicInteger i = new AtomicInteger(1);
